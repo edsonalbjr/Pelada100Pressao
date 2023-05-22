@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pelada 100 Pressão</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      h1 {
+        color: #1e3653; /* Azul */
+        font-size: 32px;
+        margin-top: 30px;
+      }
+
+      p {
+        color: #f1af09; /* Dourado */
+        font-size: 18px;
+        line-height: 1.5;
+        margin-bottom: 30px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        display: inline-block;
+        margin: 0 10px;
+      }
+
+      li a {
+        color: #1e3653; /* Azul */
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: 2px solid #f1af09; /* Azul */
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+
+      li a:hover {
+        background-color: #1e3653; /* Azul */
+        color: #f1af09; /* Dourado */
+      }
+
+      footer {
+        background-color: #1e3653; /* Azul */
+        color: #fdfdfd; /* Dourado */
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+      }
+
+      footer p {
+        margin: 0;
+      }
+
+      footer .social-links {
+        margin: 10px 0;
+      }
+
+      footer .social-links li {
+        display: inline-block;
+        margin: 0 10px;
+      }
+
+      footer .social-links a {
+        color: #f1af09; /* Dourado */
+        text-decoration: none;
+        font-size: 16px;
+      }
+
+      footer .social-links a.instagram:hover {
+        color: #e4405f; /* Cor do Instagram */
+      }
+
+      footer .social-links a.linktree:hover {
+        color: #39e09b; /* Cor do Linktree */
+      }
+
+      footer .social-links a.youtube:hover {
+        color: #ff0000; /* Cor do YouTube */
+      }
+
+      .image-container {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Responsividade para 320px */
+      @media only screen and (max-width: 320px) {
+        h1 {
+          font-size: 24px;
+        }
+
+        p {
+          font-size: 16px;
+        }
+
+        ul {
+          display: block;
+          text-align: center;
+        }
+
+        li {
+          display: block;
+          margin: 10px auto;
+        }
+
+        li:not(:last-child) {
+          margin-bottom: 25px;
+        }
+      }
+
+      /* Responsividade para 375px */
+      @media only screen and (min-width: 321px) and (max-width: 375px) {
+        h1 {
+          font-size: 24px;
+        }
+
+        p {
+          font-size: 16px;
+        }
+
+        ul {
+          display: block;
+          text-align: center;
+        }
+
+        li {
+          display: block;
+          margin: 10px auto;
+        }
+
+        li:not(:last-child) {
+          margin-bottom: 25px;
+        }
+      }
+
+      /* Responsividade para 425px */
+      @media only screen and (min-width: 376px) and (max-width: 425px) {
+        h1 {
+          font-size: 24px;
+        }
+
+        p {
+          font-size: 16px;
+        }
+
+        ul {
+          display: block;
+          text-align: center;
+        }
+
+        li {
+          display: block;
+          margin: 10px auto;
+        }
+
+        li:not(:last-child) {
+          margin-bottom: 25px;
+        }
+      }
+
+      /* Responsividade para 768px */
+      @media only screen and (min-width: 426px) and (max-width: 768px) {
+        h1 {
+          font-size: 36px;
+        }
+
+        p {
+          font-size: 18px;
+        }
+      }
+
+      /* Responsividade para 1024px */
+      @media only screen and (min-width: 769px) and (max-width: 1024px) {
+        h1 {
+          font-size: 40px;
+        }
+
+        p {
+          font-size: 20px;
+        }
+      }
+
+      /* Responsividade para 1440px */
+      @media only screen and (min-width: 1025px) and (max-width: 1440px) {
+        h1 {
+          font-size: 48px;
+        }
+
+        p {
+          font-size: 22px;
+        }
+      }
+
+      /* Responsividade para 2560px */
+      @media only screen and (min-width: 1441px) and (max-width: 2560px) {
+        h1 {
+          font-size: 56px;
+        }
+
+        p {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <h1>Pelada 100 Pressão</h1>
+      <div class="image-container">
+        <img src="./style/logopelada.png" alt="Logo Pelada" />
+      </div>
+      <p>Bem-vindo à página de gerenciamento da Pelada 100 Pressão!</p>
+    </div>
+
+    <div class="center">
+      <ul>
+        <li>
+          <a
+            href="./1-index.html"
+            style="background-color: #1e3653; color: #f1af09"
+            >Início</a
+          >
+        </li>
+        <li><a href="./2-sorteio.html">Sorteio dos times</a></li>
+        <li><a href="./3-estatisticas.html">Marcação de Estatísticas</a></li>
+        <li><a href="./4-melhoresmomentos.html">Melhores Momentos</a></li>
+      </ul>
+    </div>
+
+    <footer>
+      <ul class="social-links">
+        <li>
+          <a
+            href="https://www.instagram.com/pelada100pressao.gvt"
+            class="instagram"
+            >Instagram</a
+          >
+        </li>
+        <li>
+          <a href="https://linktr.ee/pelada100pressao" class="linktree"
+            >Linktree</a
+          >
+        </li>
+        <li>
+          <a href="https://www.youtube.com/@pelada100pressao" class="youtube"
+            >YouTube</a
+          >
+        </li>
+      </ul>
+      <br />
+      <p>&copy; 2021 Pelada 100 Pressão - Todos os direitos reservados</p>
+    </footer>
+  </body>
+</html>
