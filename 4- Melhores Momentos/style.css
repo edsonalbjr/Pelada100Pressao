@@ -1,0 +1,119 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="time"],
+select {
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Estilo do menu */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1e3653;
+  padding: 20px;
+  text-align: center;
+}
+
+.navbar a {
+  color: #f1af09;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 2px solid #f1af09;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+}
+
+.navbar a:hover {
+  background-color: #f1af09;
+  color: #1e3653;
+}
+
+form.melhores-momentos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  max-width: 600px;
+  border: 2px solid #ccc;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+form.melhores-momentos label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+form.melhores-momentos input[type="text"],
+form.melhores-momentos select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+form.melhores-momentos button[type="submit"] {
+  background-color: #008cba;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+form.melhores-momentos button[type="submit"]:hover {
+  background-color: #006b8f;
+}
