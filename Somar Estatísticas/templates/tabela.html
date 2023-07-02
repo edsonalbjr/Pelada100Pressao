@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tabela de Jogadores</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.js"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $("#myTable").DataTable();
+
+        $(".dataTable").each(function () {
+          $(this).DataTable();
+        });
+      });
+    </script>
+  </head>
+  <body onload="mostrarPlano('A')">
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".xlsx" multiple />
+      <input type="submit" value="Enviar" />
+    </form>
+
+    <br />
+
+    {% if data %}
+    <table id="myTable">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Pontos</th>
+          <th>Jogos</th>
+          <th>Gols</th>
+          <th>%G/J</th>
+          <th>Assistências</th>
+          <th>%A/J</th>
+          <th>Participações em gols</th>
+          <th>%P/G</th>
+          <th>Vitórias</th>
+          <th>Derrotas</th>
+          <th>Empate</th>
+          <th>Aproveitamento</th>
+          <th>C/A</th>
+          <th>C/V</th>
+          <!-- Adicione as demais colunas aqui -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+        <tr>
+          <td>{{ row['Nome'] }}</td>
+          <td>{{ row['Pontos'] }}</td>
+          <td>{{ row['Jogos'] }}</td>
+          <td>{{ row['Gols'] }}</td>
+          <td>{{ row['%G/J'] }}</td>
+          <td>{{ row['Assistências'] }}</td>
+          <td>{{ row['%A/J'] }}</td>
+          <td>{{ row['Participações em gols'] }}</td>
+          <td>{{ row['%P/G'] }}</td>
+          <td>{{ row['Vitórias'] }}</td>
+          <td>{{ row['Derrotas'] }}</td>
+          <td>{{ row['Empate'] }}</td>
+          <td>{{ row['Aproveitamento'] }}</td>
+          <td>{{ row['C/A'] }}</td>
+          <td>{{ row['C/V'] }}</td>
+          <!-- Adicione as demais colunas aqui -->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+    <button onclick="mostrarPlano('a')">Pontuação</button>
+    <button onclick="mostrarPlano('b')">Participações em Gols</button>
+    <button onclick="mostrarPlano('c')">Aproveitamento</button>
+    <button onclick="mostrarPlano('d')">Cartões</button>
+
+    <div id="planoA" class="plano">
+      <!-- Maiores Pontuadores -->
+      <h2>Maiores Pontuadores</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Pontuação</th>
+        </tr>
+        {% for jogador in maiores_pontuadores %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Pontos'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div id="planoB" class="plano">
+      <h2>Artilheiros & %G/J</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Gols</th>
+          <th>Jogos</th>
+          <th>%G/J</th>
+        </tr>
+        {% for jogador in artilheiros %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Gols'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['%G/J'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Maior % Gol por Jogo</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Gols</th>
+          <th>Jogos</th>
+          <th>%G/J</th>
+        </tr>
+        {% for jogador in percent_gols_por_jogo %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Gols'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['%G/J'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Assistências & %A/J</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Assistências</th>
+          <th>Jogos</th>
+          <th>%A/J</th>
+        </tr>
+        {% for jogador in assistencias %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Assistências'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['%A/J'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Maior % Assistências por Jogo</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Assistências</th>
+          <th>Jogos</th>
+          <th>%A/J</th>
+        </tr>
+        {% for jogador in percent_assistencias_por_jogo %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Assistências'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['%A/J'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Participações em Gols</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Gols</th>
+          <th>Assistências</th>
+          <th>Jogos</th>
+          <th>Participações em Gols</th>
+          <th>%P/G</th>
+        </tr>
+        {% for jogador in participacoes_gols %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Gols'] }}</td>
+          <td>{{ jogador['Assistências'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['Participações em gols'] }}</td>
+          <td>{{ jogador['%P/G'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Maior %P/G</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Gols</th>
+          <th>Assistências</th>
+          <th>Jogos</th>
+          <th>Participações em Gols</th>
+          <th>%P/G</th>
+        </tr>
+        {% for jogador in percent_participacoes_gols_por_jogo %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Gols'] }}</td>
+          <td>{{ jogador['Assistências'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['Participações em gols'] }}</td>
+          <td>{{ jogador['%P/G'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div id="planoC" class="plano">
+      <h2>Mais Jogos</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Jogos</th>
+          <th>Vitórias</th>
+          <th>Derrotas</th>
+          <th>Empate</th>
+          <th>Aproveitamento</th>
+        </tr>
+        {% for jogador in maiores_jogos %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['Vitórias'] }}</td>
+          <td>{{ jogador['Derrotas'] }}</td>
+          <td>{{ jogador['Empate'] }}</td>
+          <td>{{ jogador['Aproveitamento'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Mais Vitórias</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Jogos</th>
+          <th>Vitórias</th>
+          <th>Derrotas</th>
+          <th>Empate</th>
+          <th>Aproveitamento</th>
+        </tr>
+        {% for jogador in vitorias %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['Vitórias'] }}</td>
+          <td>{{ jogador['Derrotas'] }}</td>
+          <td>{{ jogador['Empate'] }}</td>
+          <td>{{ jogador['Aproveitamento'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Mais Derrotas</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Jogos</th>
+          <th>Vitórias</th>
+          <th>Derrotas</th>
+          <th>Empate</th>
+          <th>Aproveitamento</th>
+        </tr>
+        {% for jogador in derrotas %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['Vitórias'] }}</td>
+          <td>{{ jogador['Derrotas'] }}</td>
+          <td>{{ jogador['Empate'] }}</td>
+          <td>{{ jogador['Aproveitamento'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Mais Empates</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Jogos</th>
+          <th>Vitórias</th>
+          <th>Derrotas</th>
+          <th>Empate</th>
+          <th>Aproveitamento</th>
+        </tr>
+        {% for jogador in empates %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Jogos'] }}</td>
+          <td>{{ jogador['Vitórias'] }}</td>
+          <td>{{ jogador['Derrotas'] }}</td>
+          <td>{{ jogador['Empate'] }}</td>
+          <td>{{ jogador['Aproveitamento'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Melhor Aproveitamento</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Vitórias</th>
+          <th>Derrotas</th>
+          <th>Empate</th>
+          <th>Aproveitamento</th>
+        </tr>
+        {% for jogador in aproveitamento %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['Vitórias'] }}</td>
+          <td>{{ jogador['Derrotas'] }}</td>
+          <td>{{ jogador['Empate'] }}</td>
+          <td>{{ jogador['Aproveitamento'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div id="planoD" class="plano">
+      <h2>Cartões Amarelos</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Cartão Amarelo</th>
+        </tr>
+        {% for jogador in c_a %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['C/A'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      <h2>Cartões Vermelhos</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Cartão Vermelho</th>
+        </tr>
+        {% for jogador in c_v %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['C/V'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      <h2>Cartões Amarelos & Vermelhos</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Cartão Amarelo</th>
+          <th>Cartão Vermelho</th>
+        </tr>
+        {% for jogador in c_a %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['C/A'] }}</td>
+          <td>{{ jogador['C/V'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      <h2>Cartões Vermelhos & Amarelos</h2>
+      <table class="dataTable">
+        <tr>
+          <th>Jogador</th>
+          <th>Cartão Vermelho</th>
+          <th>Cartão Amarelo</th>
+        </tr>
+        {% for jogador in c_v %}
+        <tr>
+          <td>{{ jogador['Nome'] }}</td>
+          <td>{{ jogador['C/V'] }}</td>
+          <td>{{ jogador['C/A'] }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <br />
+    <button onclick="mostrarPlano('a')">Pontuação</button>
+    <button onclick="mostrarPlano('b')">Participações em Gols</button>
+    <button onclick="mostrarPlano('c')">Aproveitamento</button>
+    <button onclick="mostrarPlano('d')">Cartões</button>
+
+    {% endif %}
+    <script>
+      function mostrarPlano(tipo) {
+        // Oculta todos os planos
+        var planos = document.getElementsByClassName("plano");
+        for (var i = 0; i < planos.length; i++) {
+          planos[i].style.display = "none";
+        }
+
+        // Mostra o plano correspondente ao botão clicado
+        var plano = document.getElementById(
+          "plano" + tipo.charAt(0).toUpperCase() + tipo.slice(1)
+        );
+        plano.style.display = "block";
+      }
+    </script>
+  </body>
+</html>
