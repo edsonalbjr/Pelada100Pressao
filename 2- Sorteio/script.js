@@ -157,6 +157,7 @@ function sortearTimes() {
   });
 }
 
+
 // Chama a função sortearTimes
 sortearTimes();
 

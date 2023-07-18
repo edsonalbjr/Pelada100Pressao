@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Tabela de Jogadores</title>
+    <!-- Ícone da página -->
+    <link rel="icon" type="image/x-icon" href="../static/favicon.png" />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -82,7 +84,6 @@
         {% endfor %}
       </tbody>
     </table>
-
 
     <button onclick="mostrarPlano('a')">Pontuação</button>
     <button onclick="mostrarPlano('b')">Participações em Gols</button>

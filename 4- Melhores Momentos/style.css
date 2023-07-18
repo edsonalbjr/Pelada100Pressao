@@ -2,24 +2,142 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #ffffff;
+}
+
+th {
+  color: #ffffff;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video-playlist-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.video-container {
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.playlist-container {
+  padding: 10px;
+}
+
+.playlist-container ul {
+  padding: 0;
+  margin: 0;
+}
+
+.playlist-container li {
+  margin-bottom: 10px;
+}
+
+.playlist-container a {
+  display: block;
+  color: #1e3653;
+  text-decoration: none;
+}
+
+.playlist-container a:hover {
+  text-decoration: underline;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button-container button {
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+.excel {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+.button-container button#assistenciaButton {
+  background-color: #1e3653;
+  color: #f1af09;
+}
+
+.button-container button#assistenciaButton:hover {
+  background-color: #f1af09;
+  color: #1e3653;
 }
 
 h1 {
   text-align: center;
+  color: #1e3653;
 }
 
-label {
-  font-weight: bold;
+h2 {
+  text-align: center;
+  color: #1e3653;
 }
 
-input[type="text"],
-input[type="time"],
-select {
+h3 {
+  color: #1e3653;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
   margin-bottom: 10px;
+}
+
+#video {
+  width: 720;
+}
+
+#playlist {
+  width: auto;
+  margin-left: 10px;
+}
+
+#statsTable {
+  margin: 20px auto;
+  width: auto;
+  table-layout: auto;
+}
+
+table.dataTable {
+  border-collapse: collapse;
   width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+}
+
+table.dataTable th,
+table.dataTable td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+table.dataTable th {
+  background-color: #f2f2f2;
+  color: #1e3653;
+}
+
+table.dataTable td {
+  white-space: nowrap;
 }
 
 button {
@@ -35,21 +153,135 @@ button {
   border-radius: 4px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+button:hover {
+  background-color: #45a049;
 }
 
-th,
-td {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
+button#golButton,
+button#golColetivoButton,
+button#assistenciaButton,
+button#dribleButton,
+button#jogadaBonitaButton,
+button#defesaButton,
+button#desarmeButton,
+button#daNeleBolaButton {
+  background-color: #1e3653;
+  color: #f1af09;
+  font-weight: bold;
 }
 
-th {
+button#golButton:hover,
+button#golColetivoButton:hover,
+button#assistenciaButton:hover,
+button#dribleButton:hover,
+button#jogadaBonitaButton:hover,
+button#defesaButton:hover,
+button#desarmeButton:hover,
+button#daNeleBolaButton:hover {
+  background-color: #f1af09;
+  color: #1e3653;
+  font-weight: bold;
+}
+
+button[type="submit"] {
+  background-color: #008cba;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #006b8f;
+}
+
+button[onclick="exportarParaExcel()"] {
+  background-color: #1e3653;
+  color: #f1af09;
+  padding: 10px 20px;
+}
+
+button[onclick="exportarParaExcel()"]:hover {
+  background-color: #f1af09;
+  color: #1e3653;
+}
+
+/* Styles for the DataTables plugin */
+.dataTables_wrapper {
   background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background-color: #1e3653; /* Azul */
+  color: #fdfdfd; /* Dourado */
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer .social-links {
+  margin: 10px 0;
+}
+
+footer .social-links li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+footer .social-links a {
+  color: #f1af09; /* Dourado */
+  text-decoration: none;
+  font-size: 16px;
+}
+
+footer .social-links a.instagram:hover {
+  color: #e4405f; /* Cor do Instagram */
+}
+
+footer .social-links a.linktree:hover {
+  color: #39e09b; /* Cor do Linktree */
+}
+
+footer .social-links a.youtube:hover {
+  color: #ff0000; /* Cor do YouTube */
+}
+ul.social-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.social-links li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+ul.social-links li a {
+  color: #f1af09;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 2px solid #f1af09;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+ul.social-links li a:hover {
+  background-color: #1e3653;
+  color: #f1af09;
 }
 
 /* Estilo do menu */
@@ -78,42 +310,4 @@ th {
 .navbar a:hover {
   background-color: #f1af09;
   color: #1e3653;
-}
-
-form.melhores-momentos {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem auto;
-  max-width: 600px;
-  border: 2px solid #ccc;
-  padding: 1rem;
-  border-radius: 5px;
-}
-
-form.melhores-momentos label {
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-form.melhores-momentos input[type="text"],
-form.melhores-momentos select {
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-form.melhores-momentos button[type="submit"] {
-  background-color: #008cba;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-}
-
-form.melhores-momentos button[type="submit"]:hover {
-  background-color: #006b8f;
 }
