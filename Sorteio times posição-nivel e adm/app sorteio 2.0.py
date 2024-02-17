@@ -50,7 +50,7 @@ jogadores = [
     {"nome": "Winnicius C.", "habilidade": 5, "adm": False,
         "posicao_primaria": "meia", "posicao_secundaria": "atacante"},
     {"nome": "Alysson Pink", "habilidade": 3, "adm": False,
-        "posicao_primaria": "zagueiro", "posicao_secundaria": None}
+        "posicao_primaria": "Qualquer", "posicao_secundaria": None}
 ]
 
 # Função para criar times com base nas habilidade e posições dos jogadores
@@ -161,10 +161,11 @@ def exibir_times(times):
             posicao, 0) for posicao in order_of_positions if count_secondary.get(posicao, 0) != 0}
 
         # Usar o mapeamento para formatar os nomes das posições
-        positions_primary_output = ', '.join(f'{formatted_position_names.get(posicao, posicao)}: {
-                                             count}' for posicao, count in non_zero_primary_positions.items())
-        positions_secondary_output = ', '.join(f'{formatted_position_names.get(posicao, posicao)}: {
-                                               count}' for posicao, count in non_zero_secondary_positions.items())
+        positions_primary_output = ', '.join(
+            [f"{formatted_position_names.get(posicao, posicao)}: {count}" for posicao, count in non_zero_primary_positions.items()])
+
+        positions_secondary_output = ', '.join(
+            [f"{formatted_position_names.get(posicao, posicao)}: {count}" for posicao, count in non_zero_secondary_positions.items()])
 
         print(f"Time {i} | Habilidade: {sum(j['habilidade'] for j in time)} | "
               f"Posições Primárias: {positions_primary_output} | "
@@ -179,8 +180,8 @@ def exibir_times(times):
                 jogador['posicao_secundaria'], 'Nenhuma')
 
             # print(f"  Jogador: {jogador['nome']} | Habilidade: {habilidade} | ADM: {adm} | POS-1: {formatted_position_names[posicao_primaria]} | POS-2: {formatted_position_names[posicao_secundaria]}")
-            print(f"  Jogador: {jogador['nome']} | Habilidade: {habilidade} | POS-1: {
-                  formatted_position_names[posicao_primaria]} | POS-2: {posicao_secundaria}")
+            print(
+                f"  Jogador: {jogador['nome']} | Habilidade: {habilidade} | POS-1: {formatted_position_names[posicao_primaria]} | POS-2: {posicao_secundaria}")
 
         print()
 
