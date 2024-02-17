@@ -82,8 +82,9 @@ def criar_times(jogadores, num_times):
         # Adiciona o jogador ao time
         menor_time.append(jogador)
 
-        # Remove o jogador da lista geral
-        jogadores.remove(jogador)
+        # Remove o jogador da lista geral apenas se não for "Qualquer"
+        if jogador["posicao_primaria"] != "Qualquer":
+            jogadores.remove(jogador)
 
         # Verifica se todos os jogadores foram distribuídos
         if not jogadores:
@@ -91,41 +92,63 @@ def criar_times(jogadores, num_times):
 
     # Distribui os jogadores com 'adm': False
     for jogador in jogadores_adm_false:
-        # Encontra o time com menor número de jogadores e posições equilibradas
-        menor_time = min(times, key=lambda t: (
-            sum(j["habilidade"] for j in t), count_positions(t, jogador)))
+        # Se a posição primária for "Qualquer", distribui o jogador em uma posição aleatória
+        if jogador["posicao_primaria"] == "Qualquer":
+            posicoes_possiveis = ["zagueiro", "meia", "atacante"]
+            random.shuffle(posicoes_possiveis)
+            for posicao in posicoes_possiveis:
+                # Encontra o time com menor número de jogadores e posições equilibradas
+                menor_time = min(times, key=lambda t: (
+                    sum(j["habilidade"] for j in t), count_positions(t, jogador, posicao)))
 
-        # Adiciona o jogador ao time
-        menor_time.append(jogador)
+                # Adiciona o jogador ao time
+                menor_time.append(jogador)
 
-        # Remove o jogador da lista geral
-        jogadores.remove(jogador)
+                # Verifica se todos os jogadores foram distribuídos
+                if not jogadores:
+                    break
+        else:
+            # Encontra o time com menor número de jogadores e posições equilibradas
+            menor_time = min(times, key=lambda t: (
+                sum(j["habilidade"] for j in t), count_positions(t, jogador)))
 
-        # Verifica se todos os jogadores foram distribuídos
-        if not jogadores:
-            break
+            # Adiciona o jogador ao time
+            menor_time.append(jogador)
+
+            # Remove o jogador da lista geral apenas se não for "Qualquer"
+            if jogador["posicao_primaria"] != "Qualquer":
+                jogadores.remove(jogador)
+
+            # Verifica se todos os jogadores foram distribuídos
+            if not jogadores:
+                break
 
     return times
 
 # Função auxiliar para contar a quantidade de jogadores em cada posição
 
 
-def count_positions(time, jogador):
+def count_positions(time, jogador, posicao=None):
     count_primarias = sum(
         1 for j in time if j["posicao_primaria"] == jogador["posicao_primaria"])
     count_secundarias = sum(
         1 for j in time if j["posicao_secundaria"] == jogador["posicao_secundaria"])
+
+    if posicao:
+        count_primarias += 1 if jogador["posicao_primaria"] == posicao else 0
+        count_secundarias += 1 if jogador["posicao_secundaria"] == posicao else 0
+
     return count_primarias + count_secundarias
 
 # Função para exibir os times
 
 
 def exibir_times(times):
-    order_of_positions = ['zagueiro', 'meia', 'atacante', None]
+    order_of_positions = ['zagueiro', 'meia', 'atacante', None, 'Qualquer']
 
     # Mapeamento para formatar o nome das posições
     formatted_position_names = {'zagueiro': 'Zagueiros',
-                                'meia': 'Meias', 'atacante': 'Atacantes', None: 'Nenhuma'}
+                                'meia': 'Meias', 'atacante': 'Atacantes', None: 'Nenhuma', 'Qualquer': 'Qualquer'}
 
     for i, time in enumerate(times, start=1):
         count_primary = count_primary_positions(time)
