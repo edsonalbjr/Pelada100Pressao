@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+    <title>Lista de Jogadores</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            text-align: center; /* Centraliza o conteúdo */
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        ul, ol {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 3rem;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            font-size: 1.2rem;
+            padding: 1rem;
+            margin: 0 0 10px 0;
+            background-color: #f1f1f1;
+            text-align: center;
+            max-width: 1200px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            margin: 0 auto; /* Centraliza o item */
+        }
+
+        a {
+            text-decoration: none;
+            color: #008cba;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            background: linear-gradient(to bottom, #3f51b5 0%, #576ffa 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            margin: 0 auto; /* Centraliza o botão */
+            display: block;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 3rem;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+        .btn-base {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-left: 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+    .btn-adicionar {
+        background: linear-gradient(to bottom, #27ae60 0%, #2ecc71 100%);
+    }
+
+    .btn-remover {
+        background: linear-gradient(to bottom, #c0392b 0%, #e74c3c 100%);
+    }
+    </style>
+
+</head>
+<body>
+    <h1>Lista de Jogadores</h1>
+    <table id="jogadores-table">
+        <thead>
+            <tr>
+                <th>Jogador</th>
+                <th>Habilidade</th>
+                <th>Posição Primária</th>
+                <th>Posição Secundária</th>
+                <th>Filiação</th>
+                <th>Diretor</th>
+                <th>Adicionar ou Remover</th>
+                <!-- <th>Remover</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for jogador in jogadores %}
+                <tr>
+                    <td>{{ jogador.jogador|capitalize }}</td>
+                    <td>{{ jogador.habilidade }}</td>
+                    <td>{{ jogador.posicao_primaria|capitalize }}</td>
+                    <td>{{ jogador.posicao_secundaria|capitalize }}</td>
+                    <td>{{ jogador.filiacao|capitalize }}</td>
+                    <td>
+                        {% if jogador.diretor == 'sim' %}
+                            Sim
+                        {% elif jogador.diretor == 'nao' %}
+                            Não
+                        {% else %}
+                            {{ jogador.diretor|capitalize }} ~
+                        {% endif %}
+                    <td><a href="{{ url_for('adicionar_jogador', jogador_id=jogador.id) }}">Adicionar ou Remover</a></td>
+                    <!-- <td><a href="{{ url_for('adicionar_jogador', jogador_id=jogador.id) }}">Remover</a></td> -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Lista de Jogadores para Sorteio</h2>
+    <table id="jogadores-para-sorteio-table">
+        <thead>
+            <tr>
+                <th>Jogador</th>
+                <th>Habilidade</th>
+                <th>Posição Primária</th>
+                <th>Posição Secundária</th>
+                <th>Filiação</th>
+                <th>Diretor</th>
+                <th>Remover</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jogador in jogadores_para_sorteio %}
+                <tr>
+                    <td>{{ jogador.jogador }}</td>
+                    <td>{{ jogador.habilidade }}</td>
+                    <td>{{ jogador.posicao_primaria }}</td>
+                    <td>{{ jogador.posicao_secundaria }}</td>
+                    <td>{{ jogador.filiacao }}</td>
+                    <td>{{ jogador.diretor }}</td>
+                    <td><a href="{{ url_for('adicionar_jogador', jogador_id=jogador.id) }}">Remover</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="{{ url_for('sortear_times') }}" method="get">
+        <button type="submit">Sortear Times</button>
+    </form>
+    <!-- The rest of your HTML content -->
+    <script>
+        $(document).ready(function () {
+            // Inicializar DataTables para as tabelas
+            $('#jogadores-table').DataTable();
+            $('#jogadores-para-sorteio-table').DataTable();
+    
+            // Adicionar lógica para alternar entre "Adicionar" e "Remover"
+            $(document).on('click', '.btn-adicionar-remover', function (e) {
+                e.preventDefault(); // Evitar o comportamento padrão do link
+                const button = $(this);
+    
+                const jogadorId = button.data('jogador-id');
+                const isRemover = button.hasClass('btn-remover');
+    
+                // Fazer uma requisição assíncrona ao servidor
+                $.ajax({
+                    url: `/adicionar_jogador/${jogadorId}`,
+                    method: 'POST', // Use POST para adicionar/remover
+                    success: function (data) {
+                        // Alternar entre "Adicionar" e "Remover"
+                        button.text(isRemover ? 'Adicionar' : 'Remover');
+                        button.toggleClass('btn-remover btn-adicionar');
+    
+                        // Adicionar a classe base
+                        button.addClass('btn-base');
+    
+                        // Atualizar a tabela de jogadores para sorteio (opcional)
+                        $('#jogadores-para-sorteio-table').DataTable().ajax.reload();
+                    },
+                    error: function (error) {
+                        console.error('Erro ao adicionar/remover jogador:', error);
+                    }
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>

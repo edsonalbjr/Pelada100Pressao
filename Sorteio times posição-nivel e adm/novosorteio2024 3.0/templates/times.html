@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Times Sorteados</title>
+</head>
+<body>
+    <h1>Times Sorteados</h1>
+    <ul>
+        {% for time in times %}
+            <li>
+                Time {{ loop.index }} | Habilidade Total: {{ time.habilidade_total }}
+                <br>
+                Posições Primárias:
+                {% for posicao, quantidade in time.posicoes_primarias.items() %}
+                    {{ posicao }} ({{ quantidade }}){% if not loop.last %}, {% endif %}
+                {% endfor %}
+                <br>
+                Posições Secundárias:
+                {% for posicao, quantidade in time.posicoes_secundarias.items() %}
+                    {{ posicao }} ({{ quantidade }}){% if not loop.last %}, {% endif %}
+                {% endfor %}
+                <ul>
+                    {% for jogador in time.jogadores %}
+                        <li>
+                            Jogador: {{ jogador.jogador }} | Habilidade: {{ jogador.habilidade }}
+                            | Posição Primária: {{ jogador.posicao_primaria }}
+                            | Posição Secundária: {{ jogador.posicao_secundaria }}
+                            | Filiação: {{ jogador.filiacao }}
+                            | Diretor: {{ jogador.diretor }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <br>
+        {% endfor %}
+    </ul>
+    
+</body>
+</html>
