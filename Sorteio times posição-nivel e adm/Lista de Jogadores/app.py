@@ -9,7 +9,7 @@ df = pd.read_excel(file_path)
 df = df.where(pd.notna(df), None)
 
 # Renomeando as colunas
-df = df.rename(columns={"nome": "jogador", "adm": "diretor"})
+# df = df.rename(columns={"nome": "jogador", "adm": "diretor"})
 
 # Filtrando os dados com base na coluna "filiacao"
 mensalista_data = df[df['filiacao'] == 'mensalista']
@@ -21,7 +21,7 @@ mensalista = [
      "habilidade": int(jogador["habilidade"]) if jogador["habilidade"].is_integer() else jogador["habilidade"],
      "posicao_primaria": unicodedata.normalize('NFKD', str(jogador["posicao_primaria"])),
      "posicao_secundaria": unicodedata.normalize('NFKD', str(jogador["posicao_secundaria"])),
-     "diretor": unicodedata.normalize('NFKD', str(jogador["diretor"]))}
+     "adm": unicodedata.normalize('NFKD', str(jogador["diretor"]))}
     for _, jogador in mensalista_data.iterrows()
 ]
 
@@ -30,7 +30,7 @@ diarista = [
      "habilidade": int(jogador["habilidade"]) if jogador["habilidade"].is_integer() else jogador["habilidade"],
      "posicao_primaria": unicodedata.normalize('NFKD', str(jogador["posicao_primaria"])),
      "posicao_secundaria": unicodedata.normalize('NFKD', str(jogador["posicao_secundaria"])),
-     "diretor": unicodedata.normalize('NFKD', str(jogador["diretor"]))}
+     "adm": unicodedata.normalize('NFKD', str(jogador["diretor"]))}
     for _, jogador in diarista_data.iterrows()
 ]
 
