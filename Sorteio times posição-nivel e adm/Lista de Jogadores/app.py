@@ -8,31 +8,33 @@ df = pd.read_excel(file_path)
 # Substituindo os valores nan por None
 df = df.where(pd.notna(df), None)
 
-# Renomeando as colunas
-# df = df.rename(columns={"nome": "jogador", "adm": "diretor"})
-
 # Filtrando os dados com base na coluna "filiacao"
 mensalista_data = df[df['filiacao'] == 'mensalista']
 diarista_data = df[df['filiacao'] == 'diarista']
 
 # Convertendo os dados filtrados para o formato desejado
 mensalista = [
-    {"jogador": unicodedata.normalize('NFKD', str(jogador["jogador"])),
-     "habilidade": int(jogador["habilidade"]) if jogador["habilidade"].is_integer() else jogador["habilidade"],
-     "posicao_primaria": unicodedata.normalize('NFKD', str(jogador["posicao_primaria"])),
-     "posicao_secundaria": unicodedata.normalize('NFKD', str(jogador["posicao_secundaria"])),
-     "adm": unicodedata.normalize('NFKD', str(jogador["diretor"]))}
+    {
+        "nome": unicodedata.normalize('NFKD', str(jogador["jogador"])),
+        "habilidade": int(jogador["habilidade"]) if pd.notna(jogador["habilidade"]) and jogador["habilidade"].is_integer() else jogador["habilidade"],
+        "posicao_primaria": unicodedata.normalize('NFKD', str(jogador["posicao_primaria"])),
+        "posicao_secundaria": unicodedata.normalize('NFKD', str(jogador["posicao_secundaria"])),
+        "adm": True if unicodedata.normalize('NFKD', str(jogador["diretor"])) == 'sim' else False
+    }
     for _, jogador in mensalista_data.iterrows()
 ]
 
 diarista = [
-    {"jogador": unicodedata.normalize('NFKD', str(jogador["jogador"])),
-     "habilidade": int(jogador["habilidade"]) if jogador["habilidade"].is_integer() else jogador["habilidade"],
-     "posicao_primaria": unicodedata.normalize('NFKD', str(jogador["posicao_primaria"])),
-     "posicao_secundaria": unicodedata.normalize('NFKD', str(jogador["posicao_secundaria"])),
-     "adm": unicodedata.normalize('NFKD', str(jogador["diretor"]))}
+    {
+        "nome": unicodedata.normalize('NFKD', str(jogador["jogador"])),
+        "habilidade": int(jogador["habilidade"]) if pd.notna(jogador["habilidade"]) and jogador["habilidade"].is_integer() else jogador["habilidade"],
+        "posicao_primaria": unicodedata.normalize('NFKD', str(jogador["posicao_primaria"])),
+        "posicao_secundaria": unicodedata.normalize('NFKD', str(jogador["posicao_secundaria"])),
+        "adm": True if unicodedata.normalize('NFKD', str(jogador["diretor"])) == 'sim' else False
+    }
     for _, jogador in diarista_data.iterrows()
 ]
+
 
 # Criando ou substituindo o arquivo lista_de_jogadores.py
 with open("lista_de_jogadores.py", "w", encoding="utf-8") as file:
