@@ -1,0 +1,1 @@
+Falta apenas terminar de configurar a logica de sorteio
