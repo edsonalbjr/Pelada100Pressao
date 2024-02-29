@@ -178,11 +178,15 @@ def exibir_times(times):
         if habilidade_time % 1 == 0:
             habilidade_time = int(habilidade_time)
 
-        # Print Resumido
-        print(f"Time {i} | Habilidade: {habilidade_time}\n"
-              f"1° POS.: {positions_primary_output}\n"
-              f"2° POS.: {positions_secondary_output}\n")
-        # Print Resumido
+        # Print informações do time resumido
+        # print(f"Time {i} | Habilidade: {habilidade_time}\n"
+        #       f"1° POS.: {positions_primary_output}\n"
+        #       f"2° POS.: {positions_secondary_output}\n")
+        # Print informações do time resumido
+
+        # Print informações do time mais resumido
+        print(f"Time {i}")
+        # Print informações do time mais resumido
 
         for j, jogador in enumerate(time, start=1):
             habilidade = jogador['habilidade']
@@ -197,15 +201,18 @@ def exibir_times(times):
             posicao_secundaria_formatada = formatted_position_names.get(
                 posicao_secundaria, posicao_secundaria).capitalize()
 
-            # Print completo
+            # Print informações dos jogadores completo
             # print(
             #     f"  Jogador {j}: {jogador['nome']} | Habilidade: {int(habilidade) if habilidade % 1 == 0 else habilidade} | POS-1: {posicao_primaria_formatada} | POS-2: {posicao_secundaria_formatada}")
-            # Print completo
+            # Print informações dos jogadores completo
 
-            # print resumido
-            print(
-                f"{jogador['nome']}, {int(habilidade) if habilidade % 1 == 0 else habilidade}, {posicao_primaria_formatada}, {posicao_secundaria_formatada}")
-            # print resumido
+            # Print informações dos jogadores resumido
+            # print(f"{jogador['nome']}, {int(habilidade) if habilidade % 1 == 0 else habilidade}, {posicao_primaria_formatada}, {posicao_secundaria_formatada}")
+            # Print informações dos jogadores resumido
+
+            # Print informações dos jogadores mais resumido
+            print(f"{jogador['nome']}")
+            # Print informações dos jogadores mais resumido
 
         print()
 
