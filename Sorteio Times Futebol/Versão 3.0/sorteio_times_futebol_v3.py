@@ -15,19 +15,15 @@ jogadores = [
         'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Eduardo', 'habilidade': 4, 'posicao_primaria': 'meia',
         'posicao_secundaria': 'zagueiro', 'adm': False},
-    {'nome': 'Eric', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro',
+    {'nome': 'Eric ', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro',
         'posicao_secundaria': 'nenhum', 'adm': True},
-    {'nome': 'Henrique Silva', 'habilidade': 4, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'zagueiro', 'adm': False},
     {'nome': 'Kiel', 'habilidade': 5, 'posicao_primaria': 'meia',
         'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Lucas Henrique', 'habilidade': 3, 'posicao_primaria': 'atacante',
         'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Lucas Silveira', 'habilidade': 1, 'posicao_primaria': 'atacante',
         'posicao_secundaria': 'nenhum', 'adm': False},
-    {'nome': 'Manga', 'habilidade': 4, 'posicao_primaria': 'atacante',
-        'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Marcelinho', 'habilidade': 4, 'posicao_primaria': 'zagueiro',
+    {'nome': 'Manga ', 'habilidade': 4, 'posicao_primaria': 'atacante',
         'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Paulo Thiago', 'habilidade': 4, 'posicao_primaria': 'meia',
         'posicao_secundaria': 'zagueiro', 'adm': False},
@@ -39,17 +35,21 @@ jogadores = [
         'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Victor Assis', 'habilidade': 3, 'posicao_primaria': 'meia',
         'posicao_secundaria': 'atacante', 'adm': False},
-    {'nome': 'Victor Chaves', 'habilidade': 3, 'posicao_primaria': 'atacante',
-        'posicao_secundaria': 'meia', 'adm': True},
-    {'nome': 'Vinicius', 'habilidade': 5, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'atacante', 'adm': False},
-    {'nome': 'Chistopher', 'habilidade': 3.5, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'atacante', 'adm': False},
-    {'nome': 'Ícaro Feitosa', 'habilidade': 5, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Xandinho', 'habilidade': 1, 'posicao_primaria': 'zagueiro',
+    {'nome': 'Renan', 'habilidade': 5, 'posicao_primaria': 'atacante',
         'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Ronaldinho', 'habilidade': 3.5, 'posicao_primaria': 'atacante',
+        'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Túlio', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro',
+        'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Leo Albuquerque', 'habilidade': 3.5,
+        'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Cadu', 'habilidade': 5, 'posicao_primaria': 'atacante',
+        'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Sérgio', 'habilidade': 2.5, 'posicao_primaria': 'zagueiro',
+        'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Juninho', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro',
+        'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Ícaro Feitosa', 'habilidade': 5, 'posicao_primaria': 'zagueiro',
         'posicao_secundaria': 'meia', 'adm': False},
 ]
 
@@ -167,9 +167,9 @@ def exibir_times(times):
             [f"{formatted_position_names.get(posicao, posicao).capitalize() + ('s' if count > 1 and posicao not in ['qualquer', 'nenhum'] else '')}: {count}" for posicao, count in non_zero_secondary_positions.items()])
 
         # Print Completo
-        # print(f"Time {i} | Habilidade: {sum(j['habilidade'] for j in time)}\n"
-        #       f"Posições Primárias: {positions_primary_output}\n"
-        #       f"Posições Secundárias: {positions_secondary_output}\n")
+        print(f"Time {i} | Habilidade: {sum(j['habilidade'] for j in time)}\n"
+              f"Posições Primárias: {positions_primary_output}\n"
+              f"Posições Secundárias: {positions_secondary_output}\n")
         # Print Completo
 
         habilidade_time = sum(j['habilidade'] for j in time)
@@ -185,7 +185,7 @@ def exibir_times(times):
         # Print informações do time resumido
 
         # Print informações do time mais resumido
-        print(f"Time {i}")
+        # print(f"Time {i}")
         # Print informações do time mais resumido
 
         for j, jogador in enumerate(time, start=1):
@@ -202,16 +202,15 @@ def exibir_times(times):
                 posicao_secundaria, posicao_secundaria).capitalize()
 
             # Print informações dos jogadores completo
-            # print(
-            #     f"  Jogador {j}: {jogador['nome']} | Habilidade: {int(habilidade) if habilidade % 1 == 0 else habilidade} | POS-1: {posicao_primaria_formatada} | POS-2: {posicao_secundaria_formatada}")
+            print(f"  Jogador {j}: {jogador['nome']} | Habilidade: {int(habilidade) if habilidade % 1 ==
+                  0 else habilidade} | POS-1: {posicao_primaria_formatada} | POS-2: {posicao_secundaria_formatada}")
             # Print informações dos jogadores completo
 
             # Print informações dos jogadores resumido
             # print(f"{jogador['nome']}, {int(habilidade) if habilidade % 1 == 0 else habilidade}, {posicao_primaria_formatada}, {posicao_secundaria_formatada}")
             # Print informações dos jogadores resumido
-
             # Print informações dos jogadores mais resumido
-            print(f"{jogador['nome']}")
+            # print(f"{jogador['nome']}")
             # Print informações dos jogadores mais resumido
 
         print()

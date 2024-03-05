@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+button {
+  margin: 5px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.plano {
+  display: none;
+}
+
+th.sorting_asc::after {
+  content: '\25B2'; /* Símbolo de seta para cima */
+}
+
+th.sorting_desc::after {
+  content: '\25BC'; /* Símbolo de seta para baixo */
+}
+
+/* Adicione mais estilos conforme necessário */
