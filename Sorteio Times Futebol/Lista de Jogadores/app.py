@@ -12,6 +12,10 @@ df = df.where(pd.notna(df), None)
 mensalista_data = df[df['filiacao'] == 'mensalista']
 diarista_data = df[df['filiacao'] == 'diarista']
 
+# Ordenando os jogadores por ordem alfabética
+mensalista_data = mensalista_data.sort_values(by="jogador")
+diarista_data = diarista_data.sort_values(by="jogador")
+
 # Convertendo os dados filtrados para o formato desejado
 mensalista = [
     {
