@@ -1,0 +1,73 @@
+/* Estilos para a barra de navegação */
+nav {
+    background-color: #333; /* Cor de fundo */
+}
+
+nav ul {
+    list-style-type: none; /* Remove marcadores de lista */
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block; /* Exibe os itens lado a lado */
+}
+
+nav ul li a {
+    display: block; /* Converte o link em bloco */
+    color: white; /* Cor do texto */
+    padding: 10px 20px; /* Espaçamento interno */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+nav ul li a:hover {
+    background-color: #555; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilos para as subpáginas */
+.subpagina {
+    padding: 20px; /* Espaçamento interno */
+}
+
+/* Estilos específicos para as tabelas */
+table {
+    border-collapse: collapse; /* Colapso de bordas da tabela */
+    width: 100%; /* Largura total */
+}
+
+table, th, td {
+    border: 1px solid #ddd; /* Borda da tabela */
+    padding: 8px; /* Espaçamento interno das células */
+}
+
+th {
+    background-color: #f2f2f2; /* Cor de fundo do cabeçalho */
+    color: #333; /* Cor do texto do cabeçalho */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cor de fundo para linhas pares */
+}
+
+/* Estilos específicos para os links de navegação */
+a {
+    color: #333; /* Cor padrão do link */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+a:hover {
+    color: #555; /* Cor do link ao passar o mouse */
+}
+
+@font-face {
+    font-family: 'DS-DIGIB';
+    src: url('../static/fonts/DS-DIGIB.TTF') format('truetype');
+}
+
+.cronometro {
+    font-size: 36px;
+    /* margin-top: 10px; */
+    text-align: center;
+    font-family: "DS-DIGIB", sans-serif;
+}
+

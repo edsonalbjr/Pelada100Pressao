@@ -1,73 +1,49 @@
 import random
 
-jogadores = [
-    {'nome': 'Albert', 'habilidade': 5, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'atacante', 'adm': True},
-    {'nome': 'Alysson Pink', 'habilidade': 3, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'nenhum', 'adm': False},
-    {'nome': 'Betinho', 'habilidade': 4, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'meia', 'adm': True},
-    {'nome': 'Bidu', 'habilidade': 4, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Bruno Pessoa', 'habilidade': 4, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'atacante', 'adm': False},
-    {'nome': 'Dato', 'habilidade': 4, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'atacante', 'adm': False},
-    {'nome': 'Eduardo', 'habilidade': 4, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'zagueiro', 'adm': False},
-    {'nome': 'Eric', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'nenhum', 'adm': True},
-    {'nome': 'Kiel', 'habilidade': 5, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'atacante', 'adm': False},
-    {'nome': 'Lucas Henrique', 'habilidade': 3, 'posicao_primaria': 'atacante',
-        'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Manga', 'habilidade': 4, 'posicao_primaria': 'atacante',
-        'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Marcelinho', 'habilidade': 4, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Niclaudio', 'habilidade': 3, 'posicao_primaria': 'atacante',
-        'posicao_secundaria': 'nenhum', 'adm': False},
-    {'nome': 'Paulo Thiago', 'habilidade': 4, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'zagueiro', 'adm': False},
-    {'nome': 'Raphael Borges', 'habilidade': 4, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'zagueiro', 'adm': False},
-    {'nome': 'Teixa', 'habilidade': 3, 'posicao_primaria': 'atacante',
-        'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Thiago Alemão', 'habilidade': 2, 'posicao_primaria': 'qualquer',
-        'posicao_secundaria': 'nenhum', 'adm': False},
-    {'nome': 'Victor Assis', 'habilidade': 3, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'atacante', 'adm': False},
-    {'nome': 'Victor Chaves', 'habilidade': 3, 'posicao_primaria': 'atacante',
-        'posicao_secundaria': 'meia', 'adm': True},
-
-    {'nome': 'Claudino', 'habilidade': 5, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'nenhum', 'adm': False},
-    {'nome': 'Túlio', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Cadu', 'habilidade': 5, 'posicao_primaria': 'atacante',
-        'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Leo Albuquerque', 'habilidade': 3.5,
-        'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Sérgio Falcão', 'habilidade': 2.5, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'atacante', 'adm': False},
-    {'nome': 'Juninho', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro',
-        'posicao_secundaria': 'nenhum', 'adm': False},
-    {'nome': 'Lucas S.', 'habilidade': 1, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
-    {'nome': 'Flávio', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
+jogadores_sorteio = [
+    {'nome': 'Albert', 'habilidade': 5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': True},
+    {'nome': 'Alysson Pink', 'habilidade': 3, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Betinho', 'habilidade': 4, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': True},
+    {'nome': 'Bidu', 'habilidade': 4, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Bruno Pessoa', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Claudino', 'habilidade': 5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Dato', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Diego Rocha', 'habilidade': 4.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
+    {'nome': 'Eric', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': True},
+    {'nome': 'Flávio', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Grimauro', 'habilidade': 2.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Juninho', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Kiel', 'habilidade': 5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Lucas H.', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Lucas S.', 'habilidade': 1, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Léo A.', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Manga', 'habilidade': 4, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Marcelinho', 'habilidade': 4, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Niclaudio', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Paulo Thiago', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
+    {'nome': 'Raphael B.', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
+    {'nome': 'Sérgio Falcão', 'habilidade': 2.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Teixa', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Thiago Alemão', 'habilidade': 2, 'posicao_primaria': 'qualquer', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Victor Assis', 'habilidade': 3, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Victor Chaves', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': True},
     {'nome': 'Vinicius', 'habilidade': 5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Vitor S.', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
+    {'nome': 'Ícaro Feitosa', 'habilidade': 5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+
+    {'nome': 'Túlio', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    
 ]
 
-print(f'\nJogadores Sorteados: {len(jogadores)}')
+print(f'\nJogadores Sorteados: {len(jogadores_sorteio)}')
 
 
-# Função para criar times com base nas habilidade e posições dos jogadores
-def criar_times(jogadores, num_times):
-    # Fazer uma cópia aleatória da lista de jogadores
-    jogadores_copia = random.sample(jogadores, len(jogadores))
+# Função para criar times com base nas habilidade e posições dos jogadores_sorteio
+def criar_times(jogadores_sorteio, num_times):
+    # Fazer uma cópia aleatória da lista de jogadores_sorteio
+    jogadores_copia = random.sample(jogadores_sorteio, len(jogadores_sorteio))
 
-    # Separar jogadores com 'adm': True e 'adm': False
+    # Separar jogadores_sorteio com 'adm': True e 'adm': False
     jogadores_adm_true = [j for j in jogadores_copia if j['adm']]
     jogadores_adm_false = [j for j in jogadores_copia if not j['adm']]
 
@@ -80,9 +56,9 @@ def criar_times(jogadores, num_times):
     # Inicializa os times como listas vazias
     times = [[] for _ in range(num_times)]
 
-    # Distribui jogadores com 'adm': True primeiro
+    # Distribui jogadores_sorteio com 'adm': True primeiro
     for jogador in jogadores_adm_true:
-        # Encontra o time com menor número de jogadores e posições equilibradas
+        # Encontra o time com menor número de jogadores_sorteio e posições equilibradas
         menor_time = min(times, key=lambda t: (
             sum(j["habilidade"] for j in t), count_positions(t, jogador)))
 
@@ -91,13 +67,13 @@ def criar_times(jogadores, num_times):
 
         # Remove o jogador da lista geral apenas se não for "qualquer"
         if jogador["posicao_primaria"] != "qualquer":
-            jogadores.remove(jogador)
+            jogadores_sorteio.remove(jogador)
 
-        # Verifica se todos os jogadores foram distribuídos
-        if not jogadores:
+        # Verifica se todos os jogadores_sorteio foram distribuídos
+        if not jogadores_sorteio:
             break
 
-    # Distribui os jogadores com 'adm': False
+    # Distribui os jogadores_sorteio com 'adm': False
     for jogador in jogadores_adm_false:
         # Se a posição primária for "qualquer", distribui o jogador para o time com menor habilidade
         if jogador["posicao_primaria"] == "qualquer":
@@ -105,11 +81,11 @@ def criar_times(jogadores, num_times):
                 j["habilidade"] for j in t))
             menor_time.append(jogador)
             if jogador["posicao_primaria"] != "qualquer":
-                jogadores.remove(jogador)
-            if not jogadores:
+                jogadores_sorteio.remove(jogador)
+            if not jogadores_sorteio:
                 break
         else:
-            # Encontra o time com menor número de jogadores e posições equilibradas
+            # Encontra o time com menor número de jogadores_sorteio e posições equilibradas
             menor_time = min(times, key=lambda t: (
                 sum(j["habilidade"] for j in t), count_positions(t, jogador)))
 
@@ -118,16 +94,16 @@ def criar_times(jogadores, num_times):
 
             # Remove o jogador da lista geral apenas se não for "qualquer"
             if jogador["posicao_primaria"] != "qualquer":
-                jogadores.remove(jogador)
+                jogadores_sorteio.remove(jogador)
 
-            # Verifica se todos os jogadores foram distribuídos
-            if not jogadores:
+            # Verifica se todos os jogadores_sorteio foram distribuídos
+            if not jogadores_sorteio:
                 break
 
     return times
 
 
-# Função auxiliar para contar a quantidade de jogadores em cada posição
+# Função auxiliar para contar a quantidade de jogadores_sorteio em cada posição
 def count_positions(time, jogador, posicao=None):
     count_primarias = sum(
         1 for j in time if j["posicao_primaria"] == jogador["posicao_primaria"])
@@ -190,25 +166,25 @@ def exibir_times(times):
             posicao_secundaria = formatted_position_names.get(
                 jogador['posicao_secundaria'], 'Nenhum')
 
-            # Usar o mapeamento para formatar os nomes das posições dos jogadores
+            # Usar o mapeamento para formatar os nomes das posições dos jogadores_sorteio
             posicao_primaria_formatada = formatted_position_names.get(
                 posicao_primaria, posicao_primaria).capitalize()[0:3]
             posicao_secundaria_formatada = formatted_position_names.get(
                 posicao_secundaria, posicao_secundaria).capitalize()[0:3]
 
-            # Print informações dos jogadores completo
+            # Print informações dos jogadores_sorteio completo
             if posicao_secundaria_formatada != "Nen":
                 print(f"*{jogador['nome']}* | {int(habilidade) if habilidade % 1 == 0 else habilidade} Estrelas | {
                       posicao_primaria_formatada}/{posicao_secundaria_formatada}")
             else:
                 print(f"*{jogador['nome']}* | {int(habilidade) if habilidade %
                       1 == 0 else habilidade} Estrelas | {posicao_primaria_formatada}")
-            # Print informações dos jogadores completo
+            # Print informações dos jogadores_sorteio completo
 
         print()
 
 
-# Função auxiliar para contar a quantidade de jogadores em cada posição primária
+# Função auxiliar para contar a quantidade de jogadores_sorteio em cada posição primária
 def count_primary_positions(time):
     count = {}
     for jogador in time:
@@ -220,7 +196,7 @@ def count_primary_positions(time):
     return count
 
 
-# Função auxiliar para contar a quantidade de jogadores em cada posição secundária
+# Função auxiliar para contar a quantidade de jogadores_sorteio em cada posição secundária
 def count_secondary_positions(time):
     count = {}
     for jogador in time:
@@ -235,16 +211,16 @@ def count_secondary_positions(time):
 # Número de times
 num_times = 5
 
-# Número máximo de jogadores por time
+# Número máximo de jogadores_sorteio por time
 max_jogadores_por_time = 6
 
 # Criar os times
-times = criar_times(jogadores, num_times)
+times = criar_times(jogadores_sorteio, num_times)
 
 # Trocar aleatoriamente os times
 random.shuffle(times)
 
-# Ordenar os jogadores dentro de cada time por habilidade (do maior para o menor)
+# Ordenar os jogadores_sorteio dentro de cada time por habilidade (do maior para o menor)
 for time in times:
     time.sort(key=lambda jogador: jogador['habilidade'], reverse=True)
 

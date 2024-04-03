@@ -1,0 +1,334 @@
+<!-- chatgpt responda em pt-br essa pagina é a partida.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style/partida.css">
+    <title>Detalhes da Partida</title>
+</head>
+<body>
+    <h1>Detalhes da Partida</h1>
+
+    <!-- Barra de Navegação -->
+    <nav>
+        <ul>
+            <li>
+                <a href="#" onclick="exibirSubpagina('Partida')">Partida</a>
+            </li>
+            <li>
+                <a href="#" onclick="exibirSubpagina('ProximosTimes')">Próximos Times</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    <!-- Subpágina: Partida -->
+    <div id="Partida" class="subpagina">
+
+            <!-- Placar com os nomes dos times -->
+    <div id="placar">
+        <h2>Placar</h2>
+        <span id="time1" class="time">Time 1</span>
+        <span id="golsTime1">0</span>
+        <span>x</span>
+        <span id="golsTime2">0</span>
+        <span id="time2" class="time">Time 2</span>
+    </div>
+    
+    <!-- Cronômetro -->
+    <div id="cronometro">
+        <span id="tempo">10:00</span>
+    </div>
+
+    <!-- Botões de controle (play, pause, stop) -->
+    <div id="controles">
+        <button id="play" onclick="startTimer()">Play</button>
+        <button id="pause" onclick="pauseTimer()" style="display: none;">Pause</button>
+        <button id="stop" onclick="stopTimer()" style="display: none;">Stop</button>
+    </div>
+
+        {% for time, jogadores in jogadores_por_time.items() %}
+            {% if loop.index <= 2 %}
+                <h2>Time {{ time }}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Jogador</th>
+                            <th>Habilidade</th>
+                            <th>Posição Primária</th>
+                            <th>Posição Secundária</th>
+                            <th>Filiação</th>
+                            <th>Diretor</th>
+                            <th>Jogos</th>
+                            <th>Vitórias</th>
+                            <th>Empates</th>
+                            <th>Derrotas</th>
+                            <th>Gols</th>
+                            <th>Assistências</th>
+                            <th>Cartão Amarelo</th>
+                            <th>Cartão Vermelho</th>
+                            <th>Data</th>
+                            <th>Time</th>
+                            <th>Substituição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for jogador in jogadores %}
+                        <tr id="linha-jogador-{{ jogador.id }}" onclick="alternarBotoes('{{ jogador.id }}')">
+                            <td>{{ jogador.id }}</td>
+                            <td>{{ jogador.jogador }}</td>
+                            <td>{{ jogador.habilidade|int if jogador.habilidade|int == jogador.habilidade else jogador.habilidade }}</td>
+                            <td>{{ jogador.posicao_primaria|title }}</td>
+                            <td>{{ jogador.posicao_secundaria|title }}</td>
+                            <td>{{ jogador.filiacao|title }}</td>
+                            <td>{{ jogador.diretor|title }}</td>
+                            <td class="{% if jogador.vitorias is none and jogador.empates is none and jogador.derrotas is none %}empty-value{% endif %}">{{ jogador.vitorias|int + jogador.empates|int + jogador.derrotas|int }}</td>
+                            <td class="{% if jogador.vitorias is none %}empty-value{% endif %}">{{ jogador.vitorias or '0' }}</td>
+                            <td class="{% if jogador.empates is none %}empty-value{% endif %}">{{ jogador.empates or '0' }}</td>
+                            <td class="{% if jogador.derrotas is none %}empty-value{% endif %}">{{ jogador.derrotas or '0' }}</td>
+                            <td class="{% if jogador.gols is none %}empty-value{% endif %}">{{ jogador.gols or '0' }}</td>
+                            <td class="{% if jogador.assistencias is none %}empty-value{% endif %}">{{ jogador.assistencias or '0' }}</td>
+                            <td class="{% if jogador.cartao_amarelo is none %}empty-value{% endif %}">{{ jogador.cartao_amarelo or '0' }}</td>
+                            <td class="{% if jogador.cartao_vermelho is none %}empty-value{% endif %}">{{ jogador.cartao_vermelho or '0' }}</td>
+                            <td>{{ jogador.data }}</td>
+                            <td>{{ jogador.time }}</td>
+                            <td>{{ jogador.substituicao }}</td>
+                        </tr>
+                        <tr id="botoes-jogador-{{ jogador.id }}" style="display: none;">
+                            <td colspan="18">
+                                <button id="btnGol" data-id-jogador="{{ jogador.id }}">Gol</button>
+                                <button id="btnGolContra" data-id-jogador="{{ jogador.id }}">Gol Contra</button>
+                                <button id="btnCartaoAmarelo" data-id-jogador="{{ jogador.id }}">Cartão Amarelo</button>
+                                <button id="btnCartaoVermelho" data-id-jogador="{{ jogador.id }}">Cartão Vermelho</button>
+                                <button id="btnDesistir" data-id-jogador="{{ jogador.id }}">Desistir</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+
+    <script>
+        function enviarAcao(idJogador, acao) {
+            // Dados a serem enviados na solicitação POST
+            var dados = {
+                'id': idJogador
+            };
+    
+            // Dependendo da ação, adicione a chave correspondente aos dados
+            if (acao === 'gol') {
+                dados['gol'] = true;
+            } else if (acao === 'golContra') {
+                dados['gol_contra'] = true;
+            } else if (acao === 'cartaoAmarelo') {
+                dados['cartao_amarelo'] = true;
+            } else if (acao === 'cartaoVermelho') {
+                dados['cartao_vermelho'] = true;
+            }
+    
+            // Enviar uma solicitação POST para a rota /acao com os dados
+            fetch('/acao', {
+                method: 'POST',
+                body: new URLSearchParams(dados),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(function (response) {
+                // Se a solicitação for bem-sucedida, recarregue a página para atualizar os dados
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    console.error('Erro ao executar ação');
+                }
+            }).catch(function (error) {
+                console.error('Erro ao executar ação:', error);
+            });
+        }
+    </script>
+    
+    
+<!-- Subpágina: Próximos Times -->
+<div id="ProximosTimes" class="subpagina" style="display: none;">
+
+    {% for time, jogadores in jogadores_por_time.items() %}
+        {% if loop.index > 2 %}
+            <h2>Time {{ time }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Jogador</th>
+                        <th>Habilidade</th>
+                        <th>Posição Primária</th>
+                        <th>Posição Secundária</th>
+                        <th>Filiação</th>
+                        <th>Diretor</th>
+                        <th>Jogos</th>
+                        <th>Vitórias</th>
+                        <th>Empates</th>
+                        <th>Derrotas</th>
+                        <th>Gols</th>
+                        <th>Assistências</th>
+                        <th>Cartão Amarelo</th>
+                        <th>Cartão Vermelho</th>
+                        <th>Data</th>
+                        <th>Time</th>
+                        <th>Substituição</th>
+                        <th>Ações</th> <!-- Adicionamos uma coluna para as ações -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for jogador in jogadores %}
+                    <tr id="linha-jogador-{{ jogador.id }}" onclick="alternarBotoes('{{ jogador.id }}')">
+                        <td>{{ jogador.id }}</td>
+                        <td>{{ jogador.jogador }}</td>
+                        <td>{{ jogador.habilidade|int if jogador.habilidade|int == jogador.habilidade else jogador.habilidade }}</td>
+                        <td>{{ jogador.posicao_primaria|title }}</td>
+                        <td>{{ jogador.posicao_secundaria|title }}</td>
+                        <td>{{ jogador.filiacao|title }}</td>
+                        <td>{{ jogador.diretor|title }}</td>
+                        <td class="{% if jogador.vitorias is none and jogador.empates is none and jogador.derrotas is none %}empty-value{% endif %}">{{ jogador.vitorias|int + jogador.empates|int + jogador.derrotas|int }}</td>
+                        <td class="{% if jogador.vitorias is none %}empty-value{% endif %}">{{ jogador.vitorias or '0' }}</td>
+                        <td class="{% if jogador.empates is none %}empty-value{% endif %}">{{ jogador.empates or '0' }}</td>
+                        <td class="{% if jogador.derrotas is none %}empty-value{% endif %}">{{ jogador.derrotas or '0' }}</td>
+                        <td class="{% if jogador.gols is none %}empty-value{% endif %}">{{ jogador.gols or '0' }}</td>
+                        <td class="{% if jogador.assistencias is none %}empty-value{% endif %}">{{ jogador.assistencias or '0' }}</td>
+                        <td class="{% if jogador.cartao_amarelo is none %}empty-value{% endif %}">{{ jogador.cartao_amarelo or '0' }}</td>
+                        <td class="{% if jogador.cartao_vermelho is none %}empty-value{% endif %}">{{ jogador.cartao_vermelho or '0' }}</td>
+                        <td>{{ jogador.data }}</td>
+                        <td>{{ jogador.time }}</td>
+                        <td>{{ jogador.substituicao }}</td>
+                    </tr>
+                    <tr id="botoes-jogador-{{ jogador.id }}" style="display: none;">
+                        <td>
+                            <!-- Aqui você pode adicionar mais botões de ação, se necessário -->
+                            <button class="btnDesistir" onclick="desistir('{{ jogador.id }}')">Desistir</button>
+
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<script>
+    function desistir(jogadorId) {
+        // Cria um objeto FormData para enviar os dados do jogador
+        var formData = new FormData();
+        formData.append('data', jogadorId);
+
+        // Envia uma solicitação POST para a rota /desistir
+        fetch('/desistir', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Se a remoção foi bem-sucedida, redireciona para a subpágina "Próximos Times"
+                window.location.href = '/partida';
+            } else {
+                // Se ocorrer um erro, exibe uma mensagem de erro
+                console.error('Erro ao desistir do jogador');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao desistir do jogador:', error);
+        });
+    }
+
+</script>
+
+
+
+<!-- Script JavaScript -->
+
+
+    <script>
+
+        function exibirSubpagina(subpagina) {
+            // Esconder todas as subpáginas
+            var subpaginas = document.getElementsByClassName('subpagina');
+            for (var i = 0; i < subpaginas.length; i++) {
+                subpaginas[i].style.display = 'none';
+            }
+    
+            // Exibir a subpágina selecionada
+            document.getElementById(subpagina).style.display = 'block';
+        }
+    
+        // Exibir a subpágina "Partida" por padrão ao carregar a página
+        window.onload = function () {
+            exibirSubpagina('Partida');
+        };
+    
+        var tempoRestante = 600; // 10 minutos em segundos
+        var intervalId;
+    
+        // Função para atualizar os nomes dos times e a contagem de gols
+        function atualizarNomesDosTimes(novoNomeTime1, novoNomeTime2, golsTime1, golsTime2) {
+            document.getElementById('time1').textContent = `${novoNomeTime1} ${golsTime1} x ${golsTime2} ${novoNomeTime2}`;
+        }
+    
+        // Função para iniciar o cronômetro
+        function startTimer() {
+            document.getElementById('play').style.display = 'none';
+            document.getElementById('pause').style.display = 'inline-block';
+            document.getElementById('stop').style.display = 'inline-block';
+    
+            intervalId = setInterval(function () {
+                tempoRestante--;
+                var minutes = Math.floor(tempoRestante / 60);
+                var seconds = tempoRestante % 60;
+                document.getElementById('tempo').textContent = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+    
+                if (tempoRestante <= 0) {
+                    clearInterval(intervalId);
+                    document.getElementById('play').style.display = 'inline-block';
+                    document.getElementById('pause').style.display = 'none';
+                    document.getElementById('stop').style.display = 'none';
+                    alert('Tempo esgotado!');
+                }
+            }, 1000);
+        }
+    
+        // Função para pausar o cronômetro
+        function pauseTimer() {
+            clearInterval(intervalId);
+            document.getElementById('play').style.display = 'inline-block';
+            document.getElementById('pause').style.display = 'none';
+        }
+    
+        // Função para parar o cronômetro
+        function stopTimer() {
+            clearInterval(intervalId);
+            tempoRestante = 600; // Reinicia o tempo para 10 minutos
+            document.getElementById('tempo').textContent = '10:00';
+            document.getElementById('play').style.display = 'inline-block';
+            document.getElementById('pause').style.display = 'none';
+            document.getElementById('stop').style.display = 'none';
+        }
+    
+        // Função para alternar a exibição dos botões de um jogador
+        function alternarBotoes(idJogador) {
+            var botoes = document.getElementById('botoes-jogador-' + idJogador);
+            var displayValue = botoes.style.display;
+            if (displayValue === 'none' || displayValue === '') {
+                botoes.style.display = 'block';
+            } else {
+                botoes.style.display = 'none';
+            }
+        }
+    </script>
+    
+</body>
+</html>

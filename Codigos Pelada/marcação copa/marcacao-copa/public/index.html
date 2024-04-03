@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Copa 100 Pressão</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="submenu">
+      <nav>
+        <ul>
+          <li>
+            <a href="#" onclick="exibirSubpagina('Times')">Partida</a>
+          </li>
+          <li>
+            <a href="#" onclick="exibirSubpagina('Partida')">Ranking</a>
+          </li>
+          <li>
+            <a href="#" onclick="exibirSubpagina('Próximos Times')">Tabela</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div id="Partida" class="subpagina">
+        <div class="match-container">
+          <h1>Registrar Estatísticas de Partida</h1>
+          <div id="placar">
+            <div class="score">Casa 0 x 0 Visitante</div>
+            <div class="cronometro" id="cronometro">00:00</div>
+            <br />
+          </div>
+          <div class="team-select">
+            <label for="team1">Casa:</label>
+            <select id="team1">
+              <option value="team1" selected>Time 1</option>
+              <option value="team2">Menos Velozes e Menos Furiosos</option>
+              <option value="team3">Time 3</option>
+              <option value="team4">Time 4</option>
+              <option value="team5">Esquadrão Homicida</option>
+              <option value="team6">Time 6</option>
+            </select>
+            <br />
+            <label for="team2">Visitante:</label>
+            <select id="team2">
+              <option value="team1">Time 1</option>
+              <option value="team2" selected>
+                Menos Velozes e Menos Furiosos
+              </option>
+              <option value="team3">Time 3</option>
+              <option value="team4">Time 4</option>
+              <option value="team5">Esquadrão Homicida</option>
+              <option value="team6">Time 6</option>
+            </select>
+            <br />
+            <br />
+            <!-- <button id="start-match">Iniciar Partida</button>
+            <button id="end-match" disabled>Encerrar Partida</button> -->
+
+            <button id="start-match">Iniciar</button>
+            <button id="pause-match" disabled>Pausar</button>
+            <button id="resume-match" disabled>Retomar</button>
+            <button id="end-match" disabled>Parar</button>
+          </div>
+
+          <div class="match-stats">
+            <div class="team-stats team-stats-left">
+              <!-- Área para registrar as estatísticas do time da esquerda -->
+            </div>
+            <div class="team-stats team-stats-right">
+              <!-- Área para registrar as estatísticas do time da direita -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="Ranking" class="subpagina">
+        <h1>
+          <div class="ranking-container">
+            <h1>Ranking de Gols</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>Jogador</th>
+                  <th>Gols Marcados</th>
+                </tr>
+              </thead>
+              <tbody id="ranking-table-body">
+                <!-- Os jogadores e gols serão adicionados aqui dinamicamente -->
+              </tbody>
+            </table>
+          </div>
+        </h1>
+      </div>
+
+      <div id="Tabela" class="subpagina">
+        <h1>Tabela de Futebol</h1>
+        <table id="team-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Pontos</th>
+              <th>Gols Marcados</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Aqui serão adicionadas as linhas da tabela dinamicamente -->
+          </tbody>
+        </table>
+      </div>
+      
+
+    <script>
+      window.onload = () => {
+        exibirSubpagina("Partida");
+      };
+
+      function exibirSubpagina(subpagina) {
+        var subpaginas = document.getElementsByClassName("subpagina");
+        for (var i = 0; i < subpaginas.length; i++) {
+          subpaginas[i].style.display = "none";
+        }
+        document.getElementById(subpagina).style.display = "block";
+      }
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,207 @@
+<!-- chatgpt responda em pt-br essa é a pelada.html -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados da Pelada</title>
+    <link rel="stylesheet" href="../static/style/pelada.css">
+</head>
+<body>
+    <h1>Dados da Pelada</h1>
+
+    <!-- Barra de Navegação -->
+    <nav>
+        <ul>
+            <li>
+                <a href="#" onclick="exibirSubpagina('Times')">Times</a>
+            </li>
+            <li>
+                <a href="#" onclick="exibirSubpagina('Partida')">Partida</a>
+            </li>
+            <li>
+                <a href="#" onclick="exibirSubpagina('ProximosTimes')">Próximos Times</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Subpágina: Times -->
+    <div id="Times" class="subpagina">
+        {% for time, jogadores in grouped_data.items() %}
+        <h2>Time {{ time }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Habilidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jogador in jogadores %}
+                <tr>
+                    <td>{{ jogador['jogador'] }}</td>
+                    <td>{{ jogador['habilidade'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
+
+
+<!-- Subpágina: Partida -->
+<div id="Partida" class="subpagina" style="display: none;">
+    <!-- Placar com o nome dos times -->
+    <div>
+        <h2>Confronto</h2>
+        <p>Time Mandante:  0 ⚽ 0 Time Visitante: </p>
+
+    </div>
+
+    <!-- Temporizador de 10 minutos -->
+    <div>
+        <h2>Temporizador</h2>
+        <div id="temporizador"></div>
+    </div>
+
+    <!-- Div de contêiner para os times -->
+    <div style="display: flex;">
+        <!-- Time Mandante -->
+        <div style="margin-right: 20px;">
+            {% for time, jogadores in grouped_data.items() %}
+                {% if loop.index == 1 %}
+                    <h2>Time Mandante: {{ time }}</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Habilidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for jogador in jogadores %}
+                            <tr class="jogador-row" data-time="{{ time }}" data-jogador="{{ jogador['jogador'] }}">
+                                <td>{{ jogador['jogador'] }}</td>
+                                <td>{{ jogador['habilidade'] }}</td>
+                                <td>
+                                    <!-- Botões para registrar eventos -->
+                                    <button class="btn-gol">Gol + 1</button>
+                                    <button class="btn-gol-contra">Gol contra - 1</button>
+                                    <button class="btn-cartao-amarelo">Cartão Amarelo + 1</button>
+                                    <button class="btn-cartao-vermelho">Cartão Vermelho + 1</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+        <!-- Time Visitante -->
+        <div>
+            {% for time, jogadores in grouped_data.items() %}
+                {% if loop.index == 2 %}
+                    <h2>Time Visitante: {{ time }}</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Habilidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for jogador in jogadores %}
+                            <tr class="jogador-row" data-time="{{ time }}" data-jogador="{{ jogador['jogador'] }}">
+                                <td>{{ jogador['jogador'] }}</td>
+                                <td>{{ jogador['habilidade'] }}</td>
+                                <td>
+                                    <!-- Botões para registrar eventos -->
+                                    <button class="btn-gol">Gol + 1</button>
+                                    <button class="btn-gol-contra">Gol contra - 1</button>
+                                    <button class="btn-cartao-amarelo">Cartão Amarelo + 1</button>
+                                    <button class="btn-cartao-vermelho">Cartão Vermelho + 1</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <script>
+        // Adicionando um evento de clique para cada jogador
+        document.querySelectorAll('.jogador-row').forEach(function(row) {
+            row.addEventListener('click', function() {
+                // Exibir os botões de ação
+                row.querySelectorAll('button').forEach(function(btn) {
+                    btn.style.display = 'inline-block';
+                });
+            });
+        });
+    
+        // Adicionando eventos para os botões de ação
+        document.querySelectorAll('.btn-gol').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Lógica para registrar um gol
+            });
+        });
+    
+        document.querySelectorAll('.btn-gol-contra').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Lógica para registrar um gol contra
+            });
+        });
+    
+        document.querySelectorAll('.btn-cartao-amarelo').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Lógica para registrar um cartão amarelo
+            });
+        });
+    
+        document.querySelectorAll('.btn-cartao-vermelho').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Lógica para registrar um cartão vermelho
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+<!-- Subpágina: Próximos Times -->
+<div id="ProximosTimes" class="subpagina" style="display: none;">
+    {% for time, jogadores in grouped_data.items() %}
+        {% if loop.index > 2 %}
+            <h2>Time {{ time }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Habilidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for jogador in jogadores %}
+                        <tr>
+                            <td>{{ jogador['jogador'] }}</td>
+                            <td>{{ jogador['habilidade'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endfor %}
+</div>
+
+
+
+<script src="../static/script/pelada.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #dddddd;
+}
+
+.empty-value {
+    color: red; /* Cor vermelha para valores vazios */
+}
+
+/* Estilos para a barra de navegação */
+nav {
+    background-color: #333; /* Cor de fundo */
+}
+
+nav ul {
+    list-style-type: none; /* Remove marcadores de lista */
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block; /* Exibe os itens lado a lado */
+}
+
+nav ul li a {
+    display: block; /* Converte o link em bloco */
+    color: white; /* Cor do texto */
+    padding: 10px 20px; /* Espaçamento interno */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+nav ul li a:hover {
+    background-color: #555; /* Cor de fundo ao passar o mouse */
+}

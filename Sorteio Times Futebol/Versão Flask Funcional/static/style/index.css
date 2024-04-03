@@ -1,0 +1,39 @@
+body {
+    text-align: center;
+}
+
+table {
+    margin: 0 auto; /* Centraliza a tabela horizontalmente */
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+input[type="text"] {
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 30%;
+}
+
+.sort-btn {
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.sort-btn:focus {
+    outline: none;
+}

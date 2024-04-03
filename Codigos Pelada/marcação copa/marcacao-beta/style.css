@@ -1,0 +1,88 @@
+/* Estilo geral */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo do cabeçalho */
+header {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Estilo da barra de navegação */
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  background-color: #555;
+}
+
+nav li {
+  padding: 10px;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+}
+
+/* Estilo das subpáginas */
+.subpagina {
+  display: none;
+  padding: 20px;
+}
+
+/* Estilo dos botões */
+button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Estilo das tabelas */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Estilo do placar */
+.score {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Estilo dos elementos de estatísticas de jogador */
+.player-stat {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px;
+}
+
+/* Outros estilos específicos podem ser adicionados conforme necessário */
+.hidden {
+  display: none;
+}

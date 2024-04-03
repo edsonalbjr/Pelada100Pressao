@@ -1,0 +1,90 @@
+<!-- chatgpt responda em pt-br esse é a resultado_sorteio.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado do Sorteio</title>
+    <link rel="stylesheet" href="../static/style/resultado_sorteio.css">
+</head>
+<body>
+    <h2>Times Sorteados</h2>
+    <!-- Formulário para Sortear Times -->
+    <form action="/pelada" method="GET">
+        <button type="submit">Gerenciar Partidas</button>
+
+    </form>
+
+    
+    {% for time in times %}
+    <div>
+        <h3>Time {{ loop.index }}</h3>
+        <p>Habilidade Total: {{ time.habilidade_total }} Estrelas</p>
+        <!-- POSIÇÕES PRIMÁRIAS -->
+        {% set posicoes_ordem = ['zagueiro', 'meia', 'atacante', 'qualquer', 'nenhum'] %}
+
+        {% set posicoes_primarias = time.jogadores|map(attribute='posicao_primaria')|list %}
+        {% set quantidade_posicoes_primarias = {} %}
+        
+        {% for posicao in posicoes_ordem %}
+            {% set quantidade = posicoes_primarias.count(posicao) %}
+            {% if quantidade > 0 %}
+                {% set _ = quantidade_posicoes_primarias.update({posicao: quantidade}) %}
+            {% endif %}
+        {% endfor %}
+        
+        <p>1° Posição:
+        {% set printed = false %}
+        {% for posicao in posicoes_ordem %}
+            {% if posicao in quantidade_posicoes_primarias %}
+                {{ quantidade_posicoes_primarias[posicao] }} {{ posicao|title }}
+                {% set printed = true %}
+            {% endif %}
+        {% endfor %}
+        {% if not printed %}{% endif %}
+        </p>
+        <!-- POSIÇÕES PRIMÁRIAS -->
+
+        <!-- POSIÇÕES SECUNDÁRIAS -->
+        {% set posicoes_ordem = ['zagueiro', 'meia', 'atacante', 'qualquer', 'nenhum'] %}
+
+        {% set posicoes_secundarias = time.jogadores|map(attribute='posicao_secundaria')|list %}
+        {% set quantidade_posicoes_secundarias = {} %}
+        {% for posicao in posicoes_secundarias %}
+            {% if posicao != 'nenhum' %}
+                {% if posicao not in quantidade_posicoes_secundarias %}
+                    {% set _ = quantidade_posicoes_secundarias.update({posicao: posicoes_secundarias.count(posicao)}) %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        
+        <p>2° Posição:
+        {% for posicao in posicoes_ordem %}
+            {% if posicao in quantidade_posicoes_secundarias %}
+                {{ quantidade_posicoes_secundarias[posicao] }} {{ posicao|title }}
+            {% endif %}
+        {% endfor %}
+        </p>
+        <!-- POSIÇÕES SECUNDÁRIAS -->
+    
+        <table>
+            <tr>
+                <th>Nome</th>
+                <th>Habilidade</th>
+                <th>Posição Primária</th>
+                <th>Posição Secundária</th>
+            </tr>
+            {% set jogadores_ordenados = time.jogadores|sort(attribute='habilidade', reverse=True) %}
+            {% for jogador in jogadores_ordenados %}
+            <tr>
+                <td>{{ jogador.nome }}</td>
+                <td>{{ jogador.habilidade }}</td>
+                <td>{{ jogador.posicao_primaria|title }}</td>
+                <td>{{ jogador.posicao_secundaria|title }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</body>
+</html>

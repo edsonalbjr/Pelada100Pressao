@@ -1,0 +1,116 @@
+<!-- chatgpt responda em pt-br esse é a index.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Jogadores</title>
+    <link rel="stylesheet" href="../static/style/index.css">
+    <!-- Dentro do seu arquivo HTML, preferencialmente no cabeçalho -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+</head>
+<body>
+
+    <!-- Jogadores para Sorteio -->
+    <h1>Jogadores para Sorteio</h1>
+
+    <!-- Formulário para Sortear Times -->
+    <form action="/sortear" method="post">
+        <button type="submit">Sortear Times</button>
+
+    </form>
+
+    <br>
+    <input type="text" id="jogadoresSearchInput" onkeyup="searchTable('jogadoresTable')" placeholder="Pesquisar por nome do jogador...">
+    <table id="jogadoresTable">
+        <!-- Cabeçalho da tabela -->
+        <tr>
+            <th>Nº</th>
+            <th>Nome <button class="sort-btn" onclick="sortTable('jogadoresTable', 0)">▲▼</button></th>
+            <th>Habilidade <button class="sort-btn" onclick="sortTable('jogadoresTable', 1)">▲▼</button></th>
+            <th>Posição Primária <button class="sort-btn" onclick="sortTable('jogadoresTable', 2)">▲▼</button></th>
+            <th>Posição Secundária <button class="sort-btn" onclick="sortTable('jogadoresTable', 3)">▲▼</button></th>
+            <th>Remover</th>
+        </tr>
+        <!-- Linhas da tabela (jogadores para sorteio) -->
+        {% for jogador in jogadores_sorteio %}
+        <tr>
+            <td>{{ loop.index }}</td> <!-- Adicionando a coluna com o contador -->
+            <td>{{ jogador.nome }}</td>
+            <td>{{ jogador.habilidade }}</td>
+            <td>{{ jogador.posicao_primaria|capitalize }}</td>
+            <td>{{ jogador.posicao_secundaria|capitalize }}</td>
+            <td>
+                <form action="/remover_jogador/{{ loop.index0 }}" method="post">
+                    <button type="submit">Remover</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Diaristas Disponíveis -->
+    <h1>Diaristas</h1>
+    <input type="text" id="diaristasSearchInput" onkeyup="searchTable('diaristasTable')" placeholder="Pesquisar por nome do jogador...">
+    <table id="diaristasTable">
+        <!-- Cabeçalho da tabela -->
+        <tr>
+            <th>Nome <button class="sort-btn" onclick="sortTable('diaristasTable', 0)">▲▼</button></th>
+            <th>Habilidade <button class="sort-btn" onclick="sortTable('diaristasTable', 1)">▲▼</button></th>
+            <th>Posição Primária <button class="sort-btn" onclick="sortTable('diaristasTable', 2)">▲▼</button></th>
+            <th>Posição Secundária <button class="sort-btn" onclick="sortTable('diaristasTable', 3)">▲▼</button></th>
+            <th>Adicionar</th>
+        </tr>
+        <!-- Linhas da tabela (diaristas) -->
+        {% for diarista in diaristas %}
+        <tr>
+            <td>{{ diarista.nome }}</td>
+            <td>{{ diarista.habilidade }}</td>
+            <td>{{ diarista.posicao_primaria|capitalize }}</td>
+            <td>{{ diarista.posicao_secundaria|capitalize }}</td>
+            <td>
+                <form action="/adicionar_diarista/{{ loop.index0 }}" method="post">
+                    <button type="submit">Adicionar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Mensalistas Disponíveis -->
+    <h1>Mensalistas</h1>
+    <input type="text" id="mensalistasSearchInput" onkeyup="searchTable('mensalistasTable')" placeholder="Pesquisar por nome do jogador...">
+    <table id="mensalistasTable">
+        <!-- Cabeçalho da tabela -->
+        <tr>
+            <th>Nome <button class="sort-btn" onclick="sortTable('mensalistasTable', 0)">▲▼</button></th>
+            <th>Habilidade <button class="sort-btn" onclick="sortTable('mensalistasTable', 1)">▲▼</button></th>
+            <th>Posição Primária <button class="sort-btn" onclick="sortTable('mensalistasTable', 2)">▲▼</button></th>
+            <th>Posição Secundária <button class="sort-btn" onclick="sortTable('mensalistasTable', 3)">▲▼</button></th>
+            <th>Adicionar</th>
+        </tr>
+        <!-- Linhas da tabela (mensalistas) -->
+        {% for mensalista in mensalistas %}
+        <tr>
+            <td>{{ mensalista.nome }}</td>
+            <td>{{ mensalista.habilidade }}</td>
+            <td>{{ mensalista.posicao_primaria|capitalize }}</td>
+            <td>{{ mensalista.posicao_secundaria|capitalize }}</td>
+            <td>
+                <form action="/adicionar_mensalista/{{ loop.index0 }}" method="post">
+                    <button type="submit">Adicionar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+
+    <!-- Seu JavaScript -->
+<script src="../static/script/index.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
