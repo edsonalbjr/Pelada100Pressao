@@ -20,7 +20,7 @@ mensalistas = [
     {'nome': 'Marcelinho', 'habilidade': 4, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Niclaudio', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Paulo Thiago', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
-    {'nome': 'Raphael B.', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
+    {'nome': 'Raphael B.', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Sérgio Falcão', 'habilidade': 2.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Teixa', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Thiago Alemão', 'habilidade': 2, 'posicao_primaria': 'qualquer', 'posicao_secundaria': 'nenhum', 'adm': False},
