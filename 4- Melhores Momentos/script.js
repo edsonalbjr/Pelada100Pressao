@@ -1,3 +1,4 @@
+
 var channelId = "UCrwbYI0FtW9IsX2kDUt9vHg";
 var channelPlaylistsUrl =
   "https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=" +
@@ -16,6 +17,7 @@ function onYouTubeIframeAPIReady() {
     },
   });
 }
+
 
 function onPlayerReady(event) {
   fetch(channelPlaylistsUrl)
@@ -93,13 +95,27 @@ function handleClick(videoId, videoTitle) {
   currentVideoTitle = videoTitle;
 }
 
-function addStatisticToTable(lance) {
+function addStatisticToTable() {
   var currentTime = player.getCurrentTime();
   var formattedTime = formatTime(currentTime);
+  var videoId = getVideoId();
 
   var table = $("#statsTable").DataTable();
-  table.row.add([currentVideoTitle, lance, formattedTime]).draw(false);
+  if (!table || !$.fn.DataTable.isDataTable('#statsTable')) {
+      table = $("#statsTable").DataTable({
+          "pageLength": 50
+      });
+  }
+
+  table.row.add([currentVideoTitle, formattedTime]).draw(false);
 }
+
+
+
+
+
+
+
 
 function formatTime(time) {
   var minutes = Math.floor(time / 60);
@@ -107,62 +123,44 @@ function formatTime(time) {
   return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 }
 
-document.getElementById("golButton").addEventListener("click", function () {
-  addStatisticToTable("Gol");
+document.getElementById("melhores_momentosButton").addEventListener("click", function () {
+  addStatisticToTable("Melhores Momentos");
 });
 
-document.getElementById("golColetivoButton").addEventListener("click", function () {
-  addStatisticToTable("Gol Coletivo");
-});
-
-document.getElementById("assistenciaButton").addEventListener("click", function () {
-  addStatisticToTable("Assistência");
-});
-
-document.getElementById("dribleButton").addEventListener("click", function () {
-  addStatisticToTable("Drible");
-});
-
-document.getElementById("jogadaBonitaButton").addEventListener("click", function () {
-  addStatisticToTable("Jogada Bonita");
-});
-
-document.getElementById("defesaButton").addEventListener("click", function () {
-  addStatisticToTable("Defesa");
-});
-
-document.getElementById("desarmeButton").addEventListener("click", function () {
-  addStatisticToTable("Desarme");
-});
-
-document.getElementById("daNeleBolaButton").addEventListener("click", function () {
-  addStatisticToTable("Dá nele bola");
-});
-
-function exportarParaExcel() {
-  var workbook = XLSX.utils.book_new();
-
-  var statsWorksheetData = [["Vídeo", "Lance", "Tempo"]];
-
-  var table = $("#statsTable").DataTable();
-  var data = table.data().toArray();
-
-  for (var i = 0; i < data.length; i++) {
-    var video = data[i][0];
-    var lance = data[i][1];
-    var tempo = data[i][2];
-
-    statsWorksheetData.push([video, lance, tempo]);
+function getVideoId() {
+    // Verifica se o player está definido
+    if (typeof player !== "undefined") {
+      // Obtém o ID do vídeo atual do player
+      var videoId = player.getVideoData().video_id;
+      return videoId;
+    } else {
+      console.error("O player do YouTube não está definido.");
+      return null;
+    }
   }
+  
 
-  var statsWorksheet = XLSX.utils.aoa_to_sheet(statsWorksheetData);
-  XLSX.utils.book_append_sheet(workbook, statsWorksheet, "Estatísticas");
+  function exportarParaExcel() {
+    var workbook = XLSX.utils.book_new();
+    var statsWorksheetData = [["Vídeo", "Tempo"]];
 
-  var dateTime = new Date().toLocaleString().replace(/:/g, "-");
-  var filename = "melhores-momentos_" + dateTime + ".xlsx";
+    var table = $("#statsTable").DataTable();
+    var data = table.data().toArray();
 
-  var wbout = XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-  saveWorkbook(wbout, filename);
+    for (var i = 0; i < data.length; i++) {
+        var video = data[i][0];
+        var tempo = data[i][1];
+        statsWorksheetData.push([video, tempo]);
+    }
+
+    var statsWorksheet = XLSX.utils.aoa_to_sheet(statsWorksheetData);
+    XLSX.utils.book_append_sheet(workbook, statsWorksheet, "Estatísticas");
+
+    var dateTime = new Date().toLocaleString().replace(/:/g, "-");
+    var filename = "melhores-momentos_" + dateTime + ".xlsx";
+
+    var wbout = XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    saveWorkbook(wbout, filename);
 }
 
 function saveWorkbook(wbout, filename) {
@@ -186,4 +184,27 @@ function saveWorkbook(wbout, filename) {
   setTimeout(function () {
     URL.revokeObjectURL(url);
   }, 0);
+}
+
+function downloadVideo(videoId, currentTime) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/download", true); // Rota para o servidor
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.responseType = "blob";
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            var blob = new Blob([xhr.response], { type: "video/mp4" });
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = "video.mp4";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+    };
+
+    xhr.send(JSON.stringify({ videoId: videoId, currentTime: currentTime }));
 }

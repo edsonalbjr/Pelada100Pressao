@@ -1,4 +1,4 @@
-body {
+  body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -157,30 +157,18 @@ button:hover {
   background-color: #45a049;
 }
 
-button#golButton,
-button#golColetivoButton,
-button#assistenciaButton,
-button#dribleButton,
-button#jogadaBonitaButton,
-button#defesaButton,
-button#desarmeButton,
-button#daNeleBolaButton {
+button#melhores_momentosButton {
   background-color: #1e3653;
   color: #f1af09;
   font-weight: bold;
+  text-align: center;
 }
 
-button#golButton:hover,
-button#golColetivoButton:hover,
-button#assistenciaButton:hover,
-button#dribleButton:hover,
-button#jogadaBonitaButton:hover,
-button#defesaButton:hover,
-button#desarmeButton:hover,
-button#daNeleBolaButton:hover {
+button#melhores_momentosButton:hover {
   background-color: #f1af09;
   color: #1e3653;
   font-weight: bold;
+  text-align: center;
 }
 
 button[type="submit"] {
@@ -197,14 +185,18 @@ button[type="submit"]:hover {
 }
 
 button[onclick="exportarParaExcel()"] {
-  background-color: #1e3653;
-  color: #f1af09;
+  background-color: #f1af09;
+  color: #1e3653;
   padding: 10px 20px;
+  align-items: center;
+  text-align: center;
 }
 
 button[onclick="exportarParaExcel()"]:hover {
-  background-color: #f1af09;
-  color: #1e3653;
+  background-color: #1e3653;
+  color: #f1af09;
+  align-items: center;
+  text-align: center;
 }
 
 /* Styles for the DataTables plugin */

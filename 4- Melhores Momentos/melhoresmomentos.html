@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Melhores Momentos - Pelada 100 Pressão</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"
+    />
+  </head>
+  <body>
+    <!-- Inicio HTML -->
+    <!-- H1 HTML -->
+    <h1>Melhores Momentos</h1>
+    <!-- H1 HTML -->
+
+    <div class="container">
+      <div class="video-playlist-container">
+        <div class="video-container" id="video"></div>
+        <div class="playlist-container" id="playlist"></div>
+      </div>
+      <div class="button-container">
+        <button id="melhores_momentosButton">Melhores Momentos</button>
+      </div>
+    </div>
+
+    <!-- Exportar para Excel -->
+    <button class="excel" onclick="exportarParaExcel()">
+      Exportar para Excel
+    </button>
+    <br />
+
+    <!-- Table -->
+    <table id="statsTable" class="display">
+      <thead>
+        <tr>
+          <th>Video</th>
+          <th>Tempo</th>
+        </tr>
+      </thead>
+    </table>
+    
+    <!-- Table -->
+
+
+
+    <!-- Exportar para Excel -->
+    <!-- Fim HTML -->
+    <footer>
+      <p>&copy; 2021 Pelada 100 Pressao - Todos os direitos reservados</p>
+    </footer>
+    <!-- Script -->
+    <script src="script.js"></script>
+
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js" defer></script>
+    <script src="https://www.youtube.com/iframe_api" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script
+      src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"
+      defer
+    ></script>
+  </body>
+</html>
