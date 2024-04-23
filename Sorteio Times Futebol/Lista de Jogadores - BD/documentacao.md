@@ -1,7 +1,7 @@
 # Documentação do Código
 
 ## Descrição
-Este script Python lê um arquivo Excel contendo informações sobre jogadores de um time de futebol, realiza algumas operações de formatação nos dados e cria ou substitui um arquivo Python com os detalhes dos jogadores.
+Este script Python lê um arquivo Excel contendo informações sobre jogadores de um time de futebol, realiza algumas operações de formatação nos dados, incluindo a correção da ordenação dos nomes com caracteres acentuados, e cria ou substitui um arquivo Python com os detalhes dos jogadores.
 
 ## Instruções de Uso
 1. Certifique-se de ter o arquivo Excel `bancodedados.xlsx` no mesmo diretório do script.
@@ -11,6 +11,10 @@ Este script Python lê um arquivo Excel contendo informações sobre jogadores d
 <!-- ```python -->
 import pandas as pd
 import unicodedata
+import locale
+
+# Definindo a localização para considerar a ordenação alfabética correta para caracteres acentuados
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 # Carregando o arquivo Excel
 file_path = "bancodedados.xlsx"
@@ -25,6 +29,10 @@ df = df.rename(columns={"nome": "jogador", "adm": "diretor"})
 # Filtrando os dados com base na coluna "filiacao"
 mensalista_data = df[df['filiacao'] == 'mensalista']
 diarista_data = df[df['filiacao'] == 'diarista']
+
+# Ordenando os jogadores por ordem alfabética considerando a localização
+mensalista_data = mensalista_data.sort_values(by="jogador", key=lambda x: x.astype(str).str.normalize('NFKD').str.encode('ASCII', 'ignore').str.decode())
+diarista_data = diarista_data.sort_values(by="jogador", key=lambda x: x.astype(str).str.normalize('NFKD').str.encode('ASCII', 'ignore').str.decode())
 
 # Convertendo os dados filtrados para o formato desejado
 mensalista = [
@@ -58,7 +66,6 @@ with open("lista_de_jogadores.py", "w", encoding="utf-8") as file:
     file.write("]\n")
 
 print("\n> Arquivo lista_de_jogadores.py criado ou substituído com sucesso.\n")
-
 
 ## Saída Esperada
 

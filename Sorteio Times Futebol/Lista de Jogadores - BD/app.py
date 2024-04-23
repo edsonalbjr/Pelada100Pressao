@@ -1,5 +1,9 @@
 import pandas as pd
 import unicodedata
+import locale
+
+# Definindo a localização para considerar a ordenação alfabética correta para caracteres acentuados
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 # Carregando o arquivo Excel
 file_path = "bancodedados.xlsx"
@@ -12,9 +16,11 @@ df = df.where(pd.notna(df), None)
 mensalista_data = df[df['filiacao'] == 'mensalista']
 diarista_data = df[df['filiacao'] == 'diarista']
 
-# Ordenando os jogadores por ordem alfabética
-mensalista_data = mensalista_data.sort_values(by="jogador")
-diarista_data = diarista_data.sort_values(by="jogador")
+# Ordenando os jogadores por ordem alfabética considerando a localização
+mensalista_data = mensalista_data.sort_values(
+    by="jogador", key=lambda x: x.astype(str).str.normalize('NFKD'))
+diarista_data = diarista_data.sort_values(
+    by="jogador", key=lambda x: x.astype(str).str.normalize('NFKD'))
 
 # Convertendo os dados filtrados para o formato desejado
 mensalista = [
@@ -39,7 +45,6 @@ diarista = [
     for _, jogador in diarista_data.iterrows()
 ]
 
-
 # Criando ou substituindo o arquivo lista_de_jogadores.py
 with open("lista_de_jogadores.py", "w", encoding="utf-8") as file:
     file.write("mensalistas = [\n")
@@ -51,6 +56,5 @@ with open("lista_de_jogadores.py", "w", encoding="utf-8") as file:
     for jogador in diarista:
         file.write("    " + str(jogador) + ",\n")
     file.write("]\n")
-
 
 print("\n> Arquivo lista_de_jogadores.py criado ou substituído com sucesso.\n")
