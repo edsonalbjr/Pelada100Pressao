@@ -23,4 +23,13 @@ print('Seja bem-vindo a Pelada 100 Pressão, a melhor organização de pelada do
 
 print('Futebol, Futebol de campo, Futebol de salão, Campeonato, Times de futebol, Futebol brasileiro, Futebol internacional, Gols, Jogadas, Melhores momentos, Táticas de futebol, Treinamento de futebol, Jogadores famosos, Futebol de base, Futebol de rua, Curiosidades do futebol, Análises de jogos, Cobertura de competições, Entrevistas com jogadores e treinadores, Futebol de base, Documentários de futebol, Futebol de freestyle, Desafios de futebol, Jogos clássicos, Futebol de videogame, Habilidades de futebol, Lances incríveis, Treinadores de futebol, História do futebol, Futebol de praia, Futebol de seleções, Copa do Mundo, UEFA Champions League, Campeonato Brasileiro.\n')
 
-print('Bom dia, os Vídeos já estão no YouTube ▶️:  ')
+print('*Os Vídeos já estão no YouTube ▶️:* #LINK DA PLAYLIST#\n')
+
+print('*Vou postar apenas 3 melhores momentos por semana. Então, caso tenham algum lance que queiram ver no feed do Instagram e YouTube, enviem aqui:*\n')
+
+print('https://forms.gle/ENzkSzjmt4MyoWrdA\n')
+
+print('*1. Escolha o tipo do lance;*')
+print('*2. Informe em qual jogo aconteceu;*')
+print('*3. Indique o minuto e segundo do início do lance;*')
+print('*4. Indique o minuto e segundo do fim do lance.*')
