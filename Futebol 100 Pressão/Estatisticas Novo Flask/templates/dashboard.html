@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('comparison') }}">Comparação</a>
+    </div>
+    
+    <h1>Dashboard</h1>
+
+    <table border="1" id="dashboardTable">
+        <thead>
+            <tr>
+                <th><button onclick="sortTable(0)">Nome</button></th>
+                <th><button onclick="sortTable(1)">Pontos</button></th>
+                <th><button onclick="sortTable(2)">Jogos</button></th>
+                <th><button onclick="sortTable(3)">Gols</button></th>
+                <th><button onclick="sortTable(4)">%G/J</button></th>
+                <th><button onclick="sortTable(5)">Assistências</button></th>
+                <th><button onclick="sortTable(6)">%A/J</button></th>
+                <th><button onclick="sortTable(7)">Participações em gols</button></th>
+                <th><button onclick="sortTable(8)">%P/G</button></th>
+                <th><button onclick="sortTable(9)">Vitórias</button></th>
+                <th><button onclick="sortTable(10)">Derrotas</button></th>
+                <th><button onclick="sortTable(11)">Empate</button></th>
+                <th><button onclick="sortTable(12)">Aproveitamento</button></th>
+                <th><button onclick="sortTable(13)">C/A</button></th>
+                <th><button onclick="sortTable(14)">C/V</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player, data in dashboard_data.items() %}
+                {% if data['Pontos'] != 0 or data['Jogos'] != 0 or data['Gols'] != 0 or data['Assistências'] != 0 or data['Participações em gols'] != 0 or data['Vitórias'] != 0 or data['Derrotas'] != 0 or data['Empate'] != 0 or data['Aproveitamento'] != 0 or data['C/A'] != 0 or data['C/V'] != 0 %}
+                    <tr>
+                        <td><a href="{{ url_for('player_profile', player_name=player) }}">{{ player }}</a></td>
+                        <td>{{ data['Pontos'] }}</td>
+                        <td>{{ data['Jogos'] }}</td>
+        
+                        <td>{{ data['Gols'] }}</td>
+                        <td>{% if data['Gols'] == 0 or data['Jogos'] == 0 %}
+                                0%
+                            {% else %}
+                                {{ "%.1f" | format((data['Gols'] / data['Jogos']) * 100) }}%
+                            {% endif %}
+                        </td>
+        
+                        <td>{{ data['Assistências'] }}</td>
+                        <td>{% if data['Assistências'] == 0 or data['Jogos'] == 0 %}
+                                0%
+                            {% else %}
+                                {{ "%.1f" | format((data['Assistências'] / data['Jogos']) * 100) }}%
+                            {% endif %}
+                        </td>
+        
+                        <td>{{ data['Participações em gols'] }}</td>
+                        <td>{% if data['Participações em gols'] == 0 or data['Jogos'] == 0 %}
+                                0%
+                            {% else %}
+                                {{ "%.1f" | format((data['Participações em gols'] / data['Jogos']) * 100) }}%
+                            {% endif %}
+                        </td>
+        
+                        <td>{{ data['Vitórias'] }}</td>
+                        <td>{{ data['Derrotas'] }}</td>
+                        <td>{{ data['Empate'] }}</td>
+                        
+                        <td>{% if data['Jogos'] == 0 %}
+                                0%
+                            {% else %}
+                                {{ "%.1f" | format(((data['Empate'] * 1) + (data['Vitórias'] * 3)) / (data['Jogos'] * 3) * 100) }}%
+                            {% endif %}
+                        </td>
+        
+                        <td>{{ data['C/A'] }}</td>
+                        <td>{{ data['C/V'] }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function sortTable(columnIndex) {
+            const table = document.getElementById("dashboardTable");
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+    
+            rows.sort((a, b) => {
+                const aValue = columnIndex === 0 ? a.querySelectorAll("td")[columnIndex].querySelector("a").textContent : parseFloat(a.querySelectorAll("td")[columnIndex].textContent) || 0;
+                const bValue = columnIndex === 0 ? b.querySelectorAll("td")[columnIndex].querySelector("a").textContent : parseFloat(b.querySelectorAll("td")[columnIndex].textContent) || 0;
+    
+                if (columnIndex === 0) {
+                    return aValue.localeCompare(bValue);
+                } else {
+                    return aValue - bValue;
+                }
+            });
+    
+            // Inverte a ordem se já estiver ordenado de forma crescente
+            if (table.querySelector("th button").classList.contains("sorted")) {
+                rows.reverse();
+                table.querySelector("th button").classList.remove("sorted");
+            } else {
+                table.querySelector("th button").classList.add("sorted");
+            }
+    
+            // Reinsere as linhas ordenadas na tabela
+            rows.forEach(row => table.querySelector("tbody").appendChild(row));
+        }
+    </script>
+    
+
+</body>
+</html>

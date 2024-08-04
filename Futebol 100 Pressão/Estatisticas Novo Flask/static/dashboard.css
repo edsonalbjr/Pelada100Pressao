@@ -1,0 +1,83 @@
+/* Reset de estilos */
+body, h1, table {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.navbar {
+    background-color: #1E3653;
+    color: #F1AF09;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.navbar a {
+    color: #F1AF09;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #1E3653;
+    color: #F1AF09;
+}
+
+td {
+    background-color: #ffffff;
+}
+
+th button {
+    background-color: #1E3653;
+    color: #F1AF09;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+th button.sorted {
+    background-color: #555;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #1E3653;
+    color: #F1AF09;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
