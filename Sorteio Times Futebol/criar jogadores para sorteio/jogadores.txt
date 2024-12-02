@@ -1,0 +1,54 @@
+Claudino	5	qualquer
+Ícaro Feitosa	5	qualquer
+Albert	5	qualquer
+Cadu	5	qualquer
+Duduzinho	5	qualquer
+Felipinho	5	qualquer
+Diego Rocha	4,5	qualquer
+Kiel	4,5	qualquer
+Manga	4,5	qualquer
+Marcelinho	4,5	qualquer
+Joao Vitor	4,5	qualquer
+Pedro Santos	4,5	qualquer
+Bruno Pessoa	4	qualquer
+Dato	4	qualquer
+Paulo Thiago	4	qualquer
+Vitor Salgado	4	qualquer
+Flavio Ureia	4	qualquer
+Elvinho	4	qualquer
+Carlinhos	3,5	qualquer
+Betinho	3,5	qualquer
+Eduardo	3,5	qualquer
+Caio Victor	3,5	qualquer
+Thayan	3,5	qualquer
+Jackson	3,5	qualquer
+Raphael B.	3	qualquer
+Jean	3	qualquer
+Luketa	3	qualquer
+Christopher	3	qualquer
+Paulo	3	qualquer
+Marcos S.	3	qualquer
+Alysson Pink	2,5	qualquer
+Léo A.	2,5	qualquer
+Juninho	2,5	qualquer
+Flávio	2,5	qualquer
+Lucas Paranhos	2,5	qualquer
+Thiago S.	2,5	qualquer
+Victor Chaves	2	qualquer
+Rafa Ribeiro	2	qualquer
+Neto	2	qualquer
+Nagibio	2	qualquer
+Ronaldinho	2	qualquer
+Lázaro	2	qualquer
+Sérgio Falcão	1,5	qualquer
+Teixa	1,5	qualquer
+Niclaudio	1,5	qualquer
+Lucas H.	1,5	qualquer
+Serginho Vilar	1,5	qualquer
+Filep	1,5	qualquer
+Lucas S.	1	qualquer
+Thiago Alemão	1	qualquer
+Grimauro	1	qualquer
+Felipe Melo	1	qualquer
+Pou	1	qualquer
+Lauber Cavalcanti	1	qualquer

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Times e Partidas</title>
+</head>
+<body>
+    <h1>Gerenciamento de Times e Partidas</h1>
+    
+    <!-- Times Cadastrados -->
+    <h2>Times</h2>
+    <ul>
+        {% for time in times %}
+            <li>{{ time.nome }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Partidas Cadastradas -->
+    <h2>Partidas</h2>
+    <ul>
+        {% for partida in partidas %}
+            <li>Time 1: {{ partida.time1_id }} vs Time 2: {{ partida.time2_id }}</li>
+        {% endfor %}
+    </ul>
+
+    <nav>
+        <a href="/">Voltar à Página Inicial</a>
+    </nav>
+</body>
+</html>

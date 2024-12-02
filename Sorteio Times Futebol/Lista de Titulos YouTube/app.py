@@ -25,11 +25,11 @@ print('Futebol, Futebol de campo, Futebol de salão, Campeonato, Times de futebo
 
 print('*Os Vídeos já estão no YouTube ▶️:* #LINK DA PLAYLIST#\n')
 
-print('*Vou postar apenas 3 melhores momentos por semana. Então, caso tenham algum lance que queiram ver no feed do Instagram e YouTube, enviem aqui:*\n')
+# print('*Vou postar apenas 3 melhores momentos por semana. Então, caso tenham algum lance que queiram ver no feed do Instagram e YouTube, enviem aqui:*\n')
 
-print('https://forms.gle/ENzkSzjmt4MyoWrdA\n')
+# print('https://forms.gle/ENzkSzjmt4MyoWrdA\n')
 
-print('*1. Escolha o tipo do lance;*')
-print('*2. Informe em qual jogo aconteceu;*')
-print('*3. Indique o minuto e segundo do início do lance;*')
-print('*4. Indique o minuto e segundo do fim do lance.*')
+# print('*1. Escolha o tipo do lance;*')
+# print('*2. Informe em qual jogo aconteceu;*')
+# print('*3. Indique o minuto e segundo do início do lance;*')
+# print('*4. Indique o minuto e segundo do fim do lance.*')
