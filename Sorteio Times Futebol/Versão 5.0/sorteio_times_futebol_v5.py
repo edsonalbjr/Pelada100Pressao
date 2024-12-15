@@ -1,8 +1,38 @@
 import random
 
 jogadores_sorteio = [
-    {'nome': 'Kiel', 'habilidade': 4.5, 'posicao_primaria': 'meia',
-        'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Albert', 'habilidade': 4.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Betinho', 'habilidade': 4, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Bruno Pessoa', 'habilidade': 4.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Dato', 'habilidade': 3, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Ícaro Feitosa', 'habilidade': 5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Kiel', 'habilidade': 4.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Léo A.', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Lucas H.', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Manga', 'habilidade': 4.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Paulo Thiago', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
+    {'nome': 'Pou', 'habilidade': 2.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Rafa Ribeiro', 'habilidade': 3, 'posicao_primaria': 'qualquer', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Raphael B.', 'habilidade': 3.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Teixa', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Thiago Alemão', 'habilidade': 2, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Victor Chaves', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Vinicius', 'habilidade': 4.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+
+    {'nome': 'Beu', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Dudu', 'habilidade': 5, 'posicao_primaria': 'qualquer', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Felipe Pita', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
+    {'nome': 'Flavio U.', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Guilherme', 'habilidade': 4, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Jean', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'João Vitor', 'habilidade': 4.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Lauber', 'habilidade': 2, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Lázaro', 'habilidade': 3, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Luís', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Thayan', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Xandinho', 'habilidade': 1, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
+    
+    {'nome': 'Jackson', 'habilidade': 4.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
 ]
 
 
