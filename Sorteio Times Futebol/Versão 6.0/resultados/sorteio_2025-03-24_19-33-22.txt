@@ -1,0 +1,67 @@
+==================================================
+               RESULTADO DO SORTEIO
+==================================================
+
+Total de jogadores para sorteio: 30
+Diferença de estrelas: 18.0 - 21.0 | Diferença: 3.0 | Média: 4.0
+
+--------------- Time 1 ---------------
+Time 1 | 21.0 Estrelas
+1° Posição: 2 Zag, 2 Mei, 2 Ata
+2° Posição: 1 Zag, 1 Mei, 2 Ata
+
+Alysson Pink | 3 Estrelas | Zag
+Sérgio Falcão | 2.5 Estrelas | Zag
+Diego Rocha | 4.5 Estrelas | Mei
+Flavio Ureia | 3.5 Estrelas | Mei
+Bruno Pessoa | 4.5 Estrelas | Ata
+Lucas H. | 3 Estrelas | Ata
+
+--------------- Time 2 ---------------
+Time 2 | 19.0 Estrelas
+1° Posição: 2 Zag, 2 Mei, 2 Ata
+2° Posição: 1 Zag, 1 Mei, 1 Ata
+
+Léo A. | 3.5 Estrelas | Zag
+Juninho | 3 Estrelas | Zag
+Felipe Pita | 4 Estrelas | Mei
+Thayan | 3.5 Estrelas | Mei
+Jackson | 4 Estrelas | Ata
+Lucas S. | 1 Estrelas | Ata
+
+--------------- Time 3 ---------------
+Time 3 | 21.0 Estrelas
+1° Posição: 2 Zag, 2 Mei, 2 Ata
+2° Posição: 0 Zag, 2 Mei, 4 Ata
+
+Elder | 3.5 Estrelas | Zag
+Grimauro | 2 Estrelas | Zag
+Kiel | 4.5 Estrelas | Mei
+Bruno Correia | 3.5 Estrelas | Mei
+Manga | 4.5 Estrelas | Ata
+Victor Chaves | 3 Estrelas | Ata
+
+--------------- Time 4 ---------------
+Time 4 | 18.0 Estrelas
+1° Posição: 2 Zag, 2 Mei, 2 Ata
+2° Posição: 0 Zag, 1 Mei, 2 Ata
+
+Thiago Sultanum | 3.5 Estrelas | Zag
+Túlio | 3 Estrelas | Zag
+Betinho | 3.5 Estrelas | Mei
+Dato | 3.5 Estrelas | Mei
+Marcos S. | 3.5 Estrelas | Ata
+Xandinho | 1 Estrelas | Ata
+
+--------------- Time 5 ---------------
+Time 5 | 20.0 Estrelas
+1° Posição: 1 Zag, 3 Mei, 2 Ata
+2° Posição: 2 Zag, 1 Mei, 1 Ata
+
+João Vitor | 4.5 Estrelas | Zag
+Ibrayn | 3 Estrelas | Zag
+Eleanderson | 4.5 Estrelas | Mei
+Bidu | 3 Estrelas | Mei
+Nagibio | 3 Estrelas | Ata
+Thiago Alemão | 2 Estrelas | Ata
+
