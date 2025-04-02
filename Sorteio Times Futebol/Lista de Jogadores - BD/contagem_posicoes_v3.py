@@ -43,6 +43,10 @@ def classificar_por_posicao():
             else:
                 grupos[pos_primaria].append({'nome': nome, 'posicao': f"{pos_primaria}/{pos_secundaria}"})
     
+        # Ordenar cada grupo em ordem alfabética pelo nome do jogador
+        for grupo in grupos:
+            grupos[grupo].sort(key=lambda x: x['nome'].lower())
+
     return grupos
 
 # Exibir os jogadores por grupo
@@ -67,10 +71,13 @@ def exibir_grupos():
     
     for grupo in ordem_grupos:
         if grupos[grupo]:
-            print(f"=== {grupo.upper()} ===")
-            for jogador in grupos[grupo]:
-                print(f"- {jogador['nome']}")
-            print()
+            print(f"*{grupo.upper()}*")
+            # Extrair apenas os nomes dos jogadores
+            nomes_jogadores = [jogador['nome'] for jogador in grupos[grupo]]
+            # Juntar os nomes com vírgulas
+            lista_nomes = ", ".join(nomes_jogadores)
+            print(lista_nomes)
+            print()  # Linha em branco após cada grupo
 
 # Executar o programa
 if __name__ == "__main__":

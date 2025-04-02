@@ -10,12 +10,8 @@ import sys
 
 def balancear_posicoes(posicoes):
     """
-    Balanceia as posições para que cada uma tenha idealmente 10 jogadores.
-    A estratégia é:
-    1. Identificar posições com excesso e falta de jogadores
-    2. Mover jogadores das posições com excesso para posições com falta
-    3. Escolher jogadores que têm a posição secundária compatível
-    4. Selecionar aleatoriamente os jogadores dentro das possibilidades
+    Balanceia as posições usando jogadores versáteis.
+    Retorna as listas balanceadas de jogadores por posição.
     """
     # Número ideal de jogadores por posição
     NUM_IDEAL = 10
@@ -64,8 +60,8 @@ def balancear_posicoes(posicoes):
     
     # Casos especiais mais comuns
     
-    # Caso 1: Falta zagueiro (9) e sobra atacante (11)
-    if total_zagueiros == 9 and total_atacantes == 11:
+    # Caso 1: Falta zagueiro (8) e sobra atacante (12)
+    if total_zagueiros == 8 and total_atacantes == 12:
         # Procura atacantes que podem jogar como zagueiro
         candidatos = encontrar_candidatos('atacantes', 'zagueiros')
         if candidatos:
@@ -89,8 +85,8 @@ def balancear_posicoes(posicoes):
             jogador = random.choice(candidatos)
             mover_jogador(jogador, 'atacantes', 'meias')
     
-    # Caso 3: Falta zagueiro (9) e sobra meia (11)
-    elif total_zagueiros == 9 and total_meias == 11:
+    # Caso 3: Falta zagueiro (8) e sobra meia (10)
+    elif total_zagueiros == 8 and total_meias == 10:
         # Procura meias que podem jogar como zagueiro
         candidatos = encontrar_candidatos('meias', 'zagueiros')
         if candidatos:
@@ -377,11 +373,6 @@ def listar_jogadores_por_estrelas():
             print(f"Zagueiro {str(contador).rjust(2)}: {nome} {str(estrelas).ljust(8)}{pos_sec}")
             contador += 1
     
-    if len(todos_zagueiros) < 10:
-        print("\n" + "-"*20)  # Linha divisória antes dos espaços vazios
-        for i in range(len(todos_zagueiros) + 1, 11):
-            print(f"Zagueiro {str(i).rjust(2)}: ")
-    
     # Imprimindo conteúdo do dicionário de meias
     print("\n" + "-"*35 + " DICIONÁRIO MEIAS " + "-"*35)
     print("\nPosição Primária:")
@@ -399,11 +390,6 @@ def listar_jogadores_por_estrelas():
             pos_sec = f"        {jogador['posicao_secundaria'].capitalize()}" if jogador['posicao_secundaria'] != 'nenhum' else ''
             print(f"Meia {str(contador).rjust(2)}: {nome} {str(estrelas).ljust(8)}{pos_sec}")
             contador += 1
-    
-    if len(todos_meias) < 10:
-        print("\n" + "-"*20)  # Linha divisória antes dos espaços vazios
-        for i in range(len(todos_meias) + 1, 11):
-            print(f"Meia {str(i).rjust(2)}: ")
     
     # Imprimindo conteúdo do dicionário de atacantes
     print("\n" + "-"*35 + " DICIONÁRIO ATACANTES " + "-"*35)
@@ -423,11 +409,6 @@ def listar_jogadores_por_estrelas():
             print(f"Atacante {str(contador).rjust(2)}: {nome} {str(estrelas).ljust(8)}{pos_sec}")
             contador += 1
     
-    if len(todos_atacantes) < 10:
-        print("\n" + "-"*20)  # Linha divisória antes dos espaços vazios
-        for i in range(len(todos_atacantes) + 1, 11):
-            print(f"Atacante {str(i).rjust(2)}: ")
-    
     # === TIMES ===
     print("\n=== TIMES ===")
     
@@ -445,12 +426,6 @@ def listar_jogadores_por_estrelas():
     
     # Para cada posição, distribui os jogadores nos times
     for posicao, jogadores_lista in [('zagueiros', todos_zagueiros), ('meias', todos_meias), ('atacantes', todos_atacantes)]:
-        # Certifica-se de que temos 10 jogadores
-        while len(jogadores_lista) < 10:
-            # Adiciona jogadores vazios se necessário
-            jogadores_lista.append({"nome": "", "habilidade": 0, "posicao_primaria": posicao[:-1], "posicao_secundaria": "nenhum"})
-            print(f"ATENÇÃO: Adicionado jogador vazio para a posição {posicao} (total agora: {len(jogadores_lista)})")
-        
         # Identifica jogadores com nota < 3
         jogadores_fracos = [j for j in jogadores_lista if j['habilidade'] < 3 and j['nome'] != ""]
         
@@ -474,7 +449,6 @@ def listar_jogadores_por_estrelas():
                 times[time_nome][posicao].append(jogador)
                 times[time_nome]["jogadores_fracos"] += 1
                 jogadores_fracos_distribuidos.append(jogador)
-                print(f"Jogador fraco: {jogador['nome']} ({jogador['habilidade']} estrelas) adicionado ao {time_nome}")
                 break
             else:
                 # Se não conseguiu distribuir, adiciona ao time com menos jogadores fracos
@@ -482,7 +456,6 @@ def listar_jogadores_por_estrelas():
                 times[time_nome][posicao].append(jogador)
                 times[time_nome]["jogadores_fracos"] += 1
                 jogadores_fracos_distribuidos.append(jogador)
-                print(f"ATENÇÃO: Não foi possível evitar times com múltiplos jogadores fracos. {jogador['nome']} adicionado ao {time_nome}")
         
         # Ordena os jogadores restantes por habilidade (do maior para o menor)
         jogadores_para_distribuir.sort(key=lambda x: x['habilidade'], reverse=True)
@@ -793,11 +766,6 @@ def calcular_media_diferencas(executar_sorteio=True, num_sorteios=10):
         
         # Para cada posição, distribui os jogadores nos times
         for posicao, jogadores_lista in [('zagueiros', todos_zagueiros), ('meias', todos_meias), ('atacantes', todos_atacantes)]:
-            # Certifica-se de que temos 10 jogadores
-            while len(jogadores_lista) < 10:
-                # Adiciona jogadores vazios se necessário
-                jogadores_lista.append({"nome": "", "habilidade": 0, "posicao_primaria": posicao[:-1], "posicao_secundaria": "nenhum"})
-            
             # Identifica jogadores com nota < 3
             jogadores_fracos = [j for j in jogadores_lista if j['habilidade'] < 3 and j['nome'] != ""]
             

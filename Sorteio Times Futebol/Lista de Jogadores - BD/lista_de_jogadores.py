@@ -1,12 +1,11 @@
 mensalistas = [
-    {'nome': 'Alysson Pink', 'habilidade': 3, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
-    {'nome': 'Betinho', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Betinho', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Bidu', 'habilidade': 3, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
     {'nome': 'Bruno Pessoa', 'habilidade': 4.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': True},
-    
     {'nome': 'Dato', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Diego Rocha', 'habilidade': 4.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
-    {'nome': 'Grimauro', 'habilidade': 2, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Eduardo', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
+    {'nome': 'Grimauro', 'habilidade': 2, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Jackson', 'habilidade': 4, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'João Vitor', 'habilidade': 4.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Juninho', 'habilidade': 3, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
@@ -16,32 +15,20 @@ mensalistas = [
     {'nome': 'Lucas S.', 'habilidade': 1, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Manga', 'habilidade': 4.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Marcos S.', 'habilidade': 3.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Nagibio', 'habilidade': 3.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
+    {'nome': 'Paulo Thiago', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
+    {'nome': 'Rafa Ribeiro', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    {'nome': 'Raphael B.', 'habilidade': 3.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Sérgio Falcão', 'habilidade': 2.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'atacante', 'adm': False},
+    {'nome': 'Teixa', 'habilidade': 2.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Thayan', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Thiago Alemão', 'habilidade': 2, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Túlio', 'habilidade': 3, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Victor Chaves', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
 {'nome': 'Xandinho', 'habilidade': 1, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'nenhum', 'adm': False},
-{'nome': 'Thiago Sultanum', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
 {'nome': 'Flavio Ureia', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
+{'nome': 'Renan', 'habilidade': 3.5, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+{'nome': 'Thiago Sultanum', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
 {'nome': 'Elder', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'atacante', 'adm': False},
-{'nome': 'Felipe Pita', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
-{'nome': 'Eleanderson', 'habilidade': 4.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
-{'nome': 'Bruno Correia', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
-{'nome': 'ibrayn a', 'habilidade': 3, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
-
-
-
-
-
-
-
-
-
-
-
-
 ]
 
 diaristas = [
@@ -50,7 +37,7 @@ diaristas = [
     {'nome': 'Balbino', 'habilidade': 2.5, 'posicao_primaria': 'qualquer', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Beu', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Biro', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
-    
+    {'nome': 'Bruno Correia', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Cadu', 'habilidade': 4, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Caio Victor', 'habilidade': 3.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
     {'nome': 'Carlinhos', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
@@ -60,11 +47,11 @@ diaristas = [
     {'nome': 'Duduzinho', 'habilidade': 5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Eduardo Duka', 'habilidade': 5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     
-    
+    {'nome': 'Eleanderson', 'habilidade': 4.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Elvis', 'habilidade': 3.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Eric', 'habilidade': 3, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Felipe Melo', 'habilidade': 2.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'nenhum', 'adm': False},
-    
+    {'nome': 'Felipe Pita', 'habilidade': 4, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
     {'nome': 'Filep', 'habilidade': 3, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Filipinho', 'habilidade': 5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'atacante', 'adm': False},
     
@@ -105,7 +92,7 @@ diaristas = [
     {'nome': 'Pedro PiuPiu', 'habilidade': 4.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'atacante', 'adm': False},
     {'nome': 'Pou', 'habilidade': 2.5, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'nenhum', 'adm': False},
     {'nome': 'Prego', 'habilidade': 3, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
-    {'nome': 'Renan', 'habilidade': 4, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
+    
     {'nome': 'Rodrigo', 'habilidade': 4.5, 'posicao_primaria': 'meia', 'posicao_secundaria': 'zagueiro', 'adm': False},
     {'nome': 'Ronaldinho', 'habilidade': 3, 'posicao_primaria': 'atacante', 'posicao_secundaria': 'meia', 'adm': False},
     {'nome': 'Serginho V.', 'habilidade': 3, 'posicao_primaria': 'zagueiro', 'posicao_secundaria': 'meia', 'adm': False},
