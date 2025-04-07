@@ -1,7 +1,6 @@
 from modules.jogadores import lista_jogadores
 from itertools import zip_longest, combinations
 from copy import deepcopy
-import random
 
 # Configurações
 POSICOES = ['ZAGUEIROS', 'MEIAS', 'ATACANTES']
@@ -187,10 +186,6 @@ for pos in POSICOES:
     print(f"               → {somas[pos]/5:>5.1f} pontos por time (2 jogadores)")
 print("-"*100)
 
-# Imprimir times montados
-print("\nTIMES MONTADOS:")
-print("="*100)
-
 # Distribuir jogadores nos times
 print("\nTIMES MONTADOS:")
 print("="*100)
@@ -218,27 +213,19 @@ for pos in POSICOES:
         times_montados[NUM_TIMES][pos].extend(jogadores_disponiveis)
         times_montados[NUM_TIMES]['total'] += sum(j['habilidade'] for j in jogadores_disponiveis)
 
-# Embaralhar a ordem dos times
-ordem_times = list(range(1, NUM_TIMES + 1))
-random.shuffle(ordem_times)
-
-# Criar um dicionário para mapear a nova ordem
-mapeamento = {i+1: ordem_times[i] for i in range(NUM_TIMES)}
-
-# Imprimir times na ordem original, mas com os times embaralhados
+# Imprimir times montados
 for time_num in range(1, NUM_TIMES + 1):
-    time_original = mapeamento[time_num]
     print(f"\nTIME {time_num}:")
     print("-"*50)
     print("ZAGUEIROS:")
-    for i, jogador in enumerate(times_montados[time_original]['ZAGUEIROS'], 1):
+    for i, jogador in enumerate(times_montados[time_num]['ZAGUEIROS'], 1):
         print(f"{i}. {jogador['nome']} ({jogador['habilidade']})")
     print("\nMEIAS:")
-    for i, jogador in enumerate(times_montados[time_original]['MEIAS'], 1):
+    for i, jogador in enumerate(times_montados[time_num]['MEIAS'], 1):
         print(f"{i}. {jogador['nome']} ({jogador['habilidade']})")
     print("\nATACANTES:")
-    for i, jogador in enumerate(times_montados[time_original]['ATACANTES'], 1):
+    for i, jogador in enumerate(times_montados[time_num]['ATACANTES'], 1):
         print(f"{i}. {jogador['nome']} ({jogador['habilidade']})")
     print("-"*50)
-    print(f"Habilidade Total: {times_montados[time_original]['total']:.1f}")
+    print(f"Habilidade Total: {times_montados[time_num]['total']:.1f}")
     print("="*50)
