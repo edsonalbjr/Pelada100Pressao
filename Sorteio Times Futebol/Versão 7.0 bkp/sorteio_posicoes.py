@@ -2,88 +2,25 @@ from modules.jogadores import lista_jogadores
 from itertools import zip_longest, combinations
 from copy import deepcopy
 import random
-import json
-import os
 
 # Configurações
 POSICOES = ['ZAGUEIROS', 'MEIAS', 'ATACANTES']
 MAPA_POSICOES = {'zagueiro': 'ZAGUEIROS', 'meia': 'MEIAS', 'atacante': 'ATACANTES'}
 NUM_TIMES = 5
-HISTORICO_ARQUIVO = "historico_duplas.json"
 
-def carregar_historico():
-    """Carrega o histórico de duplas anteriores"""
-    try:
-        with open(HISTORICO_ARQUIVO, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return {"duplas": []}
-
-def salvar_historico(duplas_novas):
-    """Salva o histórico atualizado de duplas"""
-    historico = carregar_historico()
-    
-    # Adicionar novas duplas
-    for dupla in duplas_novas:
-        nomes_dupla = (dupla[0]['nome'], dupla[1]['nome'])
-        historico["duplas"].append(list(nomes_dupla))
-    
-    # Manter apenas as últimas 50 duplas (10 últimos jogos)
-    if len(historico["duplas"]) > 50:
-        historico["duplas"] = historico["duplas"][-50:]
-    
-    with open(HISTORICO_ARQUIVO, 'w') as f:
-        json.dump(historico, f)
-
-def encontrar_dupla_balanceada(jogadores, valor_ideal):
-    """Encontra uma dupla balanceada considerando histórico"""
-    historico = carregar_historico()
-    
-    # Calcular frequência de cada dupla no histórico
-    frequencia = {}
-    for dupla in historico["duplas"]:
-        dupla_tuple = tuple(dupla)
-        if dupla_tuple in frequencia:
-            frequencia[dupla_tuple] += 1
-        else:
-            frequencia[dupla_tuple] = 1
-        
-        # Considerar também a ordem inversa
-        dupla_inversa = (dupla[1], dupla[0])
-        if dupla_inversa in frequencia:
-            frequencia[dupla_inversa] += 1
-        else:
-            frequencia[dupla_inversa] = 1
-    
-    # Avaliar todas as duplas possíveis
-    duplas_pontuadas = []
+def encontrar_melhor_dupla(jogadores, valor_ideal):
+    """Encontra a melhor dupla de jogadores cuja soma se aproxime do valor ideal"""
+    melhor_dupla = None
+    menor_diferenca = float('inf')
     
     for dupla in combinations(jogadores, 2):
-        # Fator de equilíbrio técnico (0 a 10 pontos)
         soma = sum(j['habilidade'] for j in dupla)
-        equilibrio = abs(soma - valor_ideal)
-        pontos_equilibrio = min(10, equilibrio * 2)
-        
-        # Fator de histórico (0 a 10 pontos)
-        nomes = (dupla[0]['nome'], dupla[1]['nome'])
-        nomes_inverso = (dupla[1]['nome'], dupla[0]['nome'])
-        vezes_juntos = frequencia.get(nomes, 0) + frequencia.get(nomes_inverso, 0)
-        pontos_historico = min(10, vezes_juntos * 2.5)
-        
-        # Pontuação final (menor é melhor)
-        # Priorizamos equilíbrio (60%) e depois variação (40%)
-        pontuacao = (pontos_equilibrio * 0.6) + (pontos_historico * 0.4)
-        
-        duplas_pontuadas.append((dupla, pontuacao, soma))
+        diferenca = abs(soma - valor_ideal)
+        if diferenca < menor_diferenca:
+            menor_diferenca = diferenca
+            melhor_dupla = dupla
     
-    # Ordenar do melhor para o pior
-    duplas_pontuadas.sort(key=lambda x: x[1])
-    
-    # Escolher aleatoriamente entre as 3 melhores opções
-    # (Isso adiciona mais variação enquanto mantém times balanceados)
-    top_opcoes = min(3, len(duplas_pontuadas))
-    indice = random.randint(0, top_opcoes - 1)
-    return duplas_pontuadas[indice][0]
+    return melhor_dupla
 
 def imprimir_lista_jogadores(times, titulo):
     """Imprime a lista de jogadores formatada"""
@@ -171,76 +108,66 @@ def redistribuir_jogadores(times):
             print(f"\nMOVENDO POR POSIÇÃO SECUNDÁRIA: {jogador['nome']} ({jogador['habilidade']}) movido de {origem} para {destino}")
     
     # ETAPA 1: Redistribuir todos os jogadores com posição secundária primeiro
-    # Verificar se precisa redistribuir por posição secundária
-    necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
+    print("\n--- ETAPA 1: REDISTRIBUINDO JOGADORES POR POSIÇÃO SECUNDÁRIA ---")
     
-    # Só mostrar a mensagem e executar a etapa 1 se for necessário
-    if necessita_equilibrio:
-        print("\n--- ETAPA 1: REDISTRIBUINDO JOGADORES POR POSIÇÃO SECUNDÁRIA ---")
-        
-        while True:
-            # Verificar se ainda precisa equilibrar os times
-            necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
-            if not necessita_equilibrio:
-                break
-                
-            # Tenta mover jogadores com posição secundária
-            movimento_realizado = False
+    while True:
+        # Verificar se ainda precisa equilibrar os times
+        necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
+        if not necessita_equilibrio:
+            break
             
-            for destino in posicoes_faltando:
-                destino_secundaria = destino.lower()[:-1]  # Converte MEIAS -> meia, etc.
+        # Tenta mover jogadores com posição secundária
+        movimento_realizado = False
+        
+        for destino in posicoes_faltando:
+            destino_secundaria = destino.lower()[:-1]  # Converte MEIAS -> meia, etc.
+            
+            for origem in posicoes_excesso:
+                # Procura jogadores com a posição secundária correspondente ao destino
+                jogadores = encontrar_jogadores_por_secundaria(origem, destino_secundaria)
                 
-                for origem in posicoes_excesso:
-                    # Procura jogadores com a posição secundária correspondente ao destino
-                    jogadores = encontrar_jogadores_por_secundaria(origem, destino_secundaria)
-                    
-                    if jogadores:
-                        # Move o jogador com maior habilidade
-                        mover_jogador(jogadores[0], origem, destino, is_coringa=False)
-                        movimento_realizado = True
-                        break
-                
-                if movimento_realizado:
+                if jogadores:
+                    # Move o jogador com maior habilidade
+                    mover_jogador(jogadores[0], origem, destino, is_coringa=False)
+                    movimento_realizado = True
                     break
-                    
-            # Se não conseguiu mover nenhum jogador com posição secundária, passa para a próxima etapa
-            if not movimento_realizado:
+            
+            if movimento_realizado:
                 break
+                
+        # Se não conseguiu mover nenhum jogador com posição secundária, passa para a próxima etapa
+        if not movimento_realizado:
+            break
     
     # ETAPA 2: Usar coringas apenas se necessário
-    # Verificar se precisa de coringas
-    necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
+    print("\n--- ETAPA 2: USANDO CORINGAS SE NECESSÁRIO ---")
     
-    # Só mostrar a mensagem e executar a etapa 2 se for necessário
-    if necessita_equilibrio:
-        print("\n--- ETAPA 2: USANDO CORINGAS SE NECESSÁRIO ---")
-        
-        while True:
-            # Verificar se ainda precisa equilibrar os times
-            necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
-            if not necessita_equilibrio:
-                break
-                
-            # Tenta mover coringas
-            movimento_realizado = False
+    while True:
+        # Verificar se ainda precisa equilibrar os times
+        necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
+        if not necessita_equilibrio:
+            break
             
-            for destino in posicoes_faltando:
-                for origem in posicoes_excesso:
-                    # Procura jogadores que podem ser usados como coringa (sem posição secundária)
-                    coringas = encontrar_coringas(origem)
-                    
-                    if coringas:
-                        # Move o jogador com maior habilidade
-                        mover_jogador(coringas[0], origem, destino, is_coringa=True)
-                        movimento_realizado = True
-                        break
+        # Tenta mover coringas
+        movimento_realizado = False
+        
+        for destino in posicoes_faltando:
+            for origem in posicoes_excesso:
+                # Procura jogadores que podem ser usados como coringa (sem posição secundária)
+                coringas = encontrar_coringas(origem)
                 
-                if movimento_realizado:
+                if coringas:
+                    # Move o jogador com maior habilidade
+                    mover_jogador(coringas[0], origem, destino, is_coringa=True)
+                    movimento_realizado = True
                     break
-                    
-            # Se não conseguiu mover nenhum coringa, para o processo
-            if not movimento_realizado:
+            
+            if movimento_realizado:
                 break
+                
+        # Se não conseguiu mover nenhum coringa, para o processo
+        if not movimento_realizado:
+            break
     
     # Análise final da quantidade de jogadores
     print("\nANÁLISE FINAL DA DISTRIBUIÇÃO:")
@@ -294,9 +221,6 @@ print("-"*100)
 # Inicializar estrutura dos times
 times_montados = {i: {'ZAGUEIROS': [], 'MEIAS': [], 'ATACANTES': [], 'total': 0} for i in range(1, NUM_TIMES + 1)}
 
-# Lista para armazenar as novas duplas formadas
-duplas_formadas = []
-
 # Distribuir jogadores para cada posição
 for pos in POSICOES:
     jogadores_disponiveis = deepcopy(times[pos])
@@ -305,34 +229,17 @@ for pos in POSICOES:
     # Distribuir para os primeiros N-1 times
     for time_num in range(1, NUM_TIMES):
         if len(jogadores_disponiveis) >= 2:
-            # Usar a nova função que considera o histórico
-            dupla = encontrar_dupla_balanceada(jogadores_disponiveis, valor_ideal)
+            dupla = encontrar_melhor_dupla(jogadores_disponiveis, valor_ideal)
             if dupla:
                 times_montados[time_num][pos].extend(dupla)
                 times_montados[time_num]['total'] += sum(j['habilidade'] for j in dupla)
                 for jogador in dupla:
                     jogadores_disponiveis.remove(jogador)
-                
-                # Registrar a dupla formada
-                duplas_formadas.append(dupla)
     
     # Último time recebe os jogadores restantes
     if len(jogadores_disponiveis) == 2:
         times_montados[NUM_TIMES][pos].extend(jogadores_disponiveis)
         times_montados[NUM_TIMES]['total'] += sum(j['habilidade'] for j in jogadores_disponiveis)
-        
-        # Registrar também esta dupla
-        duplas_formadas.append(tuple(jogadores_disponiveis))
-
-# Salvar histórico atualizado
-salvar_historico(duplas_formadas)
-
-# Imprimir informação sobre o histórico
-historico = carregar_historico()
-print("\nINFORMAÇÕES SOBRE HISTÓRICO DE DUPLAS:")
-print(f"Total de duplas no histórico: {len(historico['duplas'])}")
-print(f"Novas duplas formadas: {len(duplas_formadas)}")
-print("-"*100)
 
 # Embaralhar a ordem dos times
 ordem_times = list(range(1, NUM_TIMES + 1))
