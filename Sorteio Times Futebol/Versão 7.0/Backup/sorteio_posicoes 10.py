@@ -62,110 +62,87 @@ def redistribuir_jogadores(times):
         'atacante': 'ATACANTES'
     }
     
-    # Função para equilibrar os jogadores entre posições
-    def equilibrar_times():
-        # 1. Identificar posições com excesso e falta de jogadores
-        contagem = {pos: len(times[pos]) for pos in POSICOES}
-        posicoes_necessitadas = [pos for pos, qtd in contagem.items() if qtd < 10]
-        posicoes_sobrando = [pos for pos, qtd in contagem.items() if qtd > 10]
-        
-        if not posicoes_necessitadas or not posicoes_sobrando:
-            return False, None, None
-            
-        return True, posicoes_necessitadas, posicoes_sobrando
-    
-    # Função para encontrar jogadores com posição secundária
-    def encontrar_jogadores_por_secundaria(origem, destino_secundaria):
+    def encontrar_jogadores_para_mover(origem, posicao_destino):
+        """Encontra jogadores que podem ser movidos de uma posição para outra"""
         jogadores = []
         for jogador in times[origem]:
-            if jogador['posicao_secundaria'] == destino_secundaria:
+            if jogador['posicao_secundaria'] == posicao_destino:
                 jogadores.append(jogador)
-        # Ordenar por habilidade
-        jogadores.sort(key=lambda j: j['habilidade'], reverse=True)
-        return jogadores
-        
-    # Função para encontrar coringas
-    def encontrar_coringas(origem):
-        jogadores = []
-        for jogador in times[origem]:
-            if jogador['posicao_secundaria'] == 'nenhum':
-                jogadores.append(jogador)
-        # Ordenar por habilidade
-        jogadores.sort(key=lambda j: j['habilidade'], reverse=True)
         return jogadores
     
-    # Função para mover jogador entre posições
-    def mover_jogador(jogador, origem, destino, is_coringa=False):
+    def mover_jogador(origem, destino, jogador, is_coringa=False):
+        """Move um jogador de uma posição para outra"""
         times[destino].append(jogador)
         times[origem].remove(jogador)
         # Reordenar após mover
         times[destino].sort(key=lambda j: j['habilidade'], reverse=True)
         times[origem].sort(key=lambda j: j['habilidade'], reverse=True)
-        # Mostrar mensagem
+        # Mostrar mensagem se for coringa
         if is_coringa:
             print(f"\nUSANDO CORINGA: {jogador['nome']} ({jogador['habilidade']}) movido de {origem} para {destino}")
-        else:
-            print(f"\nMOVENDO POR POSIÇÃO SECUNDÁRIA: {jogador['nome']} ({jogador['habilidade']}) movido de {origem} para {destino}")
     
-    # ETAPA 1: Redistribuir todos os jogadores com posição secundária primeiro
-    print("\n--- ETAPA 1: REDISTRIBUINDO JOGADORES POR POSIÇÃO SECUNDÁRIA ---")
+    def encontrar_coringa(origem, destino):
+        """Encontra o melhor jogador para ser coringa"""
+        # Primeiro, encontrar jogadores sem posição secundária
+        jogadores_sem_secundaria = [j for j in times[origem] if j['posicao_secundaria'] == 'nenhum']
+        if not jogadores_sem_secundaria:
+            return None
+            
+        # Encontrar a maior nota entre os jogadores sem posição secundária
+        maior_nota = max(j['habilidade'] for j in jogadores_sem_secundaria)
+        # Pegar todos os jogadores com essa nota
+        coringas = [j for j in jogadores_sem_secundaria if j['habilidade'] == maior_nota]
+        return coringas[0] if coringas else None
     
+    # Loop principal de redistribuição
     while True:
-        # Verificar se ainda precisa equilibrar os times
-        necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
-        if not necessita_equilibrio:
+        # Verificar quantos jogadores cada posição tem
+        contagem = {pos: len(times[pos]) for pos in POSICOES}
+        
+        # Se todas as posições tiverem 10 jogadores, parar
+        if all(qtd == 10 for qtd in contagem.values()):
             break
             
-        # Tenta mover jogadores com posição secundária
+        # Encontrar posições que precisam de jogadores
+        posicoes_necessitadas = [pos for pos, qtd in contagem.items() if qtd < 10]
+        posicoes_sobrando = [pos for pos, qtd in contagem.items() if qtd > 10]
+        
+        # Se não houver posições para ajustar, parar
+        if not posicoes_necessitadas or not posicoes_sobrando:
+            break
+            
+        # Tentar mover jogadores
         movimento_realizado = False
         
-        for destino in posicoes_faltando:
-            destino_secundaria = destino.lower()[:-1]  # Converte MEIAS -> meia, etc.
-            
-            for origem in posicoes_excesso:
-                # Procura jogadores com a posição secundária correspondente ao destino
-                jogadores = encontrar_jogadores_por_secundaria(origem, destino_secundaria)
-                
+        # 1. Tentar mover usando posições secundárias
+        for origem in posicoes_sobrando:
+            for destino in posicoes_necessitadas:
+                # Encontrar jogadores que podem ser movidos
+                jogadores = encontrar_jogadores_para_mover(origem, destino.lower())
                 if jogadores:
-                    # Move o jogador com maior habilidade
-                    mover_jogador(jogadores[0], origem, destino, is_coringa=False)
+                    # Ordenar por habilidade
+                    jogadores.sort(key=lambda j: j['habilidade'], reverse=True)
+                    # Mover o melhor jogador
+                    mover_jogador(origem, destino, jogadores[0])
                     movimento_realizado = True
                     break
-            
             if movimento_realizado:
                 break
-                
-        # Se não conseguiu mover nenhum jogador com posição secundária, passa para a próxima etapa
-        if not movimento_realizado:
-            break
-    
-    # ETAPA 2: Usar coringas apenas se necessário
-    print("\n--- ETAPA 2: USANDO CORINGAS SE NECESSÁRIO ---")
-    
-    while True:
-        # Verificar se ainda precisa equilibrar os times
-        necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
-        if not necessita_equilibrio:
-            break
-            
-        # Tenta mover coringas
-        movimento_realizado = False
         
-        for destino in posicoes_faltando:
-            for origem in posicoes_excesso:
-                # Procura jogadores que podem ser usados como coringa (sem posição secundária)
-                coringas = encontrar_coringas(origem)
-                
-                if coringas:
-                    # Move o jogador com maior habilidade
-                    mover_jogador(coringas[0], origem, destino, is_coringa=True)
-                    movimento_realizado = True
+        # 2. Se não conseguiu mover usando posições secundárias, tentar usar coringa
+        if not movimento_realizado:
+            for origem in posicoes_sobrando:
+                for destino in posicoes_necessitadas:
+                    # Encontrar coringa
+                    coringa = encontrar_coringa(origem, destino)
+                    if coringa:
+                        mover_jogador(origem, destino, coringa, is_coringa=True)
+                        movimento_realizado = True
+                        break
+                if movimento_realizado:
                     break
-            
-            if movimento_realizado:
-                break
                 
-        # Se não conseguiu mover nenhum coringa, para o processo
+        # Se não conseguiu mover de nenhuma forma, parar
         if not movimento_realizado:
             break
     
