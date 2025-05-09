@@ -1,9 +1,25 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from modules.jogadores import lista_jogadores
 from itertools import zip_longest, combinations
 from copy import deepcopy
 import random
 import json
 import os
+import unicodedata  # Para lidar com acentos
+
+# Função para remover acentos e caracteres especiais
+def remover_acentos(texto):
+    """Remove acentos e caracteres especiais de uma string"""
+    try:
+        # Normaliza para forma NFKD - separa letras dos acentos
+        texto_normalizado = unicodedata.normalize('NFKD', texto)
+        # Remove caracteres não-ASCII
+        return ''.join([c for c in texto_normalizado if not unicodedata.combining(c)])
+    except:
+        # Em caso de erro, retorna o texto original
+        return texto
 
 # Configurações
 POSICOES = ['ZAGUEIROS', 'MEIAS', 'ATACANTES']
@@ -87,29 +103,38 @@ def encontrar_dupla_balanceada(jogadores, valor_ideal):
 
 def imprimir_lista_jogadores(times, titulo):
     """Imprime a lista de jogadores formatada"""
-    print("\n" + "="*100)
-    print(titulo.center(100))
-    print("="*100)
+    titulo_sem_acento = remover_acentos(titulo)
+    print("\n" + "="*80)
+    print(titulo_sem_acento.center(80))
+    print("="*80)
 
     print("\nLISTA DE JOGADORES:")
-    print("-"*100)
-    print(f"{'ZAGUEIROS':<35} {'MEIAS':<35} {'ATACANTES':<35}")
-    print("-"*100)
+    print("-"*80)
+    print(f"{'ZAGUEIROS':<30} {'MEIAS':<30} {'ATACANTES':<30}")
+    print("-"*80)
 
-    for i, row in enumerate(zip_longest(*[times[pos] for pos in POSICOES], fillvalue=None), 1):
+    # Imprimir cada posição separadamente
+    max_jogadores = max(len(times[pos]) for pos in POSICOES)
+    
+    for i in range(max_jogadores):
         linha = []
-        for jogador in row:
-            if jogador:
+        
+        for pos in POSICOES:
+            jogadores_pos = times[pos]
+            if i < len(jogadores_pos):
+                jogador = jogadores_pos[i]
+                nome_limpo = remover_acentos(jogador['nome'])
                 pos_sec = '-' if jogador['posicao_secundaria'] == 'nenhum' else jogador['posicao_secundaria']
-                linha.append(f"{i}- {jogador['nome']} ({jogador['habilidade']}) [{pos_sec}]")
+                linha.append(f"{i+1}- {nome_limpo} ({jogador['habilidade']}) [{pos_sec}]")
             else:
                 linha.append("")
-        print(f"{linha[0]:<35} {linha[1]:<35} {linha[2]}")
+        
+        print(f"{linha[0]:<30} {linha[1]:<30} {linha[2]}")
 
-    print("-"*100)
+    print("-"*80)
 
 def redistribuir_jogadores(times):
-    """Redistribui jogadores mantendo o equilíbrio de habilidades"""
+    """Redistribui jogadores para balancear os times"""
     # Análise inicial da quantidade de jogadores
     print("\nANÁLISE INICIAL DA DISTRIBUIÇÃO:")
     print("-"*50)
@@ -118,129 +143,267 @@ def redistribuir_jogadores(times):
         print(f"{pos}: {qtd} jogadores")
     print("-"*50)
     
-    # Mapeamento reverso para posições secundárias
-    posicoes_secundarias_reverso = {
-        'zagueiro': 'ZAGUEIROS',
-        'meia': 'MEIAS',
-        'atacante': 'ATACANTES'
-    }
+    # Verificar quantos jogadores temos e quantos precisamos em cada posição
+    jogadores_alvo = 10  # Queremos exatamente 10 jogadores em cada posição
+    excesso_zagueiros = len(times['ZAGUEIROS']) - jogadores_alvo
+    excesso_meias = len(times['MEIAS']) - jogadores_alvo
+    excesso_atacantes = len(times['ATACANTES']) - jogadores_alvo
     
-    # Função para equilibrar os jogadores entre posições
-    def equilibrar_times():
-        # 1. Identificar posições com excesso e falta de jogadores
-        contagem = {pos: len(times[pos]) for pos in POSICOES}
-        posicoes_necessitadas = [pos for pos, qtd in contagem.items() if qtd < 10]
-        posicoes_sobrando = [pos for pos, qtd in contagem.items() if qtd > 10]
-        
-        if not posicoes_necessitadas or not posicoes_sobrando:
-            return False, None, None
-            
-        return True, posicoes_necessitadas, posicoes_sobrando
+    print(f"\nExcesso/Falta: ZAGUEIROS: {excesso_zagueiros}, MEIAS: {excesso_meias}, ATACANTES: {excesso_atacantes}")
     
-    # Função para encontrar jogadores com posição secundária
-    def encontrar_jogadores_por_secundaria(origem, destino_secundaria):
-        jogadores = []
-        for jogador in times[origem]:
-            if jogador['posicao_secundaria'] == destino_secundaria:
-                jogadores.append(jogador)
-        # Ordenar por habilidade
-        jogadores.sort(key=lambda j: j['habilidade'], reverse=True)
-        return jogadores
-        
-    # Função para encontrar coringas
-    def encontrar_coringas(origem):
-        jogadores = []
-        for jogador in times[origem]:
-            if jogador['posicao_secundaria'] == 'nenhum':
-                jogadores.append(jogador)
-        # Ordenar por habilidade
-        jogadores.sort(key=lambda j: j['habilidade'], reverse=True)
-        return jogadores
-    
-    # Função para mover jogador entre posições
-    def mover_jogador(jogador, origem, destino, is_coringa=False):
-        times[destino].append(jogador)
+    # Função para mover jogador
+    def mover_jogador(jogador, origem, destino, motivo="POSIÇÃO SECUNDÁRIA"):
         times[origem].remove(jogador)
-        # Reordenar após mover
-        times[destino].sort(key=lambda j: j['habilidade'], reverse=True)
+        times[destino].append(jogador)
         times[origem].sort(key=lambda j: j['habilidade'], reverse=True)
-        # Mostrar mensagem
-        if is_coringa:
-            print(f"\nUSANDO CORINGA: {jogador['nome']} ({jogador['habilidade']}) movido de {origem} para {destino}")
-        else:
-            print(f"\nMOVENDO POR POSIÇÃO SECUNDÁRIA: {jogador['nome']} ({jogador['habilidade']}) movido de {origem} para {destino}")
+        times[destino].sort(key=lambda j: j['habilidade'], reverse=True)
+        nome = remover_acentos(jogador['nome'])
+        motivo = remover_acentos(motivo)
+        print(f"\nMOVENDO POR {motivo}: {nome} ({jogador['habilidade']}) de {origem} para {destino}")
     
-    # ETAPA 1: Redistribuir todos os jogadores com posição secundária primeiro
-    # Verificar se precisa redistribuir por posição secundária
-    necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
-    
-    # Só mostrar a mensagem e executar a etapa 1 se for necessário
-    if necessita_equilibrio:
-        print("\n--- ETAPA 1: REDISTRIBUINDO JOGADORES POR POSIÇÃO SECUNDÁRIA ---")
+    # ETAPA 1: Balancear zagueiros e meias
+    if excesso_zagueiros > 0 and excesso_meias < 0:
+        print("\n--- ETAPA 1: MOVENDO ZAGUEIROS QUE JOGAM DE MEIA ---")
         
-        while True:
-            # Verificar se ainda precisa equilibrar os times
-            necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
-            if not necessita_equilibrio:
-                break
-                
-            # Tenta mover jogadores com posição secundária
-            movimento_realizado = False
-            
-            for destino in posicoes_faltando:
-                destino_secundaria = destino.lower()[:-1]  # Converte MEIAS -> meia, etc.
-                
-                for origem in posicoes_excesso:
-                    # Procura jogadores com a posição secundária correspondente ao destino
-                    jogadores = encontrar_jogadores_por_secundaria(origem, destino_secundaria)
-                    
-                    if jogadores:
-                        # Move o jogador com maior habilidade
-                        mover_jogador(jogadores[0], origem, destino, is_coringa=False)
-                        movimento_realizado = True
-                        break
-                
-                if movimento_realizado:
-                    break
-                    
-            # Se não conseguiu mover nenhum jogador com posição secundária, passa para a próxima etapa
-            if not movimento_realizado:
-                break
-    
-    # ETAPA 2: Usar coringas apenas se necessário
-    # Verificar se precisa de coringas
-    necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
-    
-    # Só mostrar a mensagem e executar a etapa 2 se for necessário
-    if necessita_equilibrio:
-        print("\n--- ETAPA 2: USANDO CORINGAS SE NECESSÁRIO ---")
+        # Quantos zagueiros precisamos mover para meias
+        mover_zag_para_meias = min(excesso_zagueiros, abs(excesso_meias))
         
-        while True:
-            # Verificar se ainda precisa equilibrar os times
-            necessita_equilibrio, posicoes_faltando, posicoes_excesso = equilibrar_times()
-            if not necessita_equilibrio:
-                break
-                
-            # Tenta mover coringas
-            movimento_realizado = False
-            
-            for destino in posicoes_faltando:
-                for origem in posicoes_excesso:
-                    # Procura jogadores que podem ser usados como coringa (sem posição secundária)
-                    coringas = encontrar_coringas(origem)
-                    
-                    if coringas:
-                        # Move o jogador com maior habilidade
-                        mover_jogador(coringas[0], origem, destino, is_coringa=True)
-                        movimento_realizado = True
-                        break
-                
-                if movimento_realizado:
-                    break
-                    
-            # Se não conseguiu mover nenhum coringa, para o processo
-            if not movimento_realizado:
-                break
+        # Encontrar zagueiros que jogam de meia
+        zagueiros_meias = []
+        for jogador in times['ZAGUEIROS']:
+            if jogador['posicao_secundaria'] == 'meia':
+                zagueiros_meias.append(jogador)
+        
+        # Ordenar por habilidade (maiores primeiro)
+        zagueiros_meias.sort(key=lambda j: j['habilidade'], reverse=True)
+        
+        print(f"Encontrados {len(zagueiros_meias)} zagueiros que jogam de meia")
+        
+        # Mover os necessários
+        for i in range(min(len(zagueiros_meias), mover_zag_para_meias)):
+            mover_jogador(zagueiros_meias[i], 'ZAGUEIROS', 'MEIAS', "ZAGUEIRO QUE JOGA MEIA")
+            excesso_zagueiros -= 1
+            excesso_meias += 1
+    
+    # ETAPA 2: Balancear atacantes e meias
+    if excesso_atacantes > 0 and excesso_meias < 0:
+        print("\n--- ETAPA 2: MOVENDO ATACANTES QUE JOGAM DE MEIA ---")
+        
+        # Quantos atacantes precisamos mover para meias
+        mover_atac_para_meias = min(excesso_atacantes, abs(excesso_meias))
+        
+        # Encontrar atacantes que jogam de meia
+        atacantes_meias = []
+        for jogador in times['ATACANTES']:
+            if jogador['posicao_secundaria'] == 'meia':
+                atacantes_meias.append(jogador)
+        
+        # Ordenar por habilidade (maiores primeiro)
+        atacantes_meias.sort(key=lambda j: j['habilidade'], reverse=True)
+        
+        print(f"Encontrados {len(atacantes_meias)} atacantes que jogam de meia")
+        
+        # Mover os necessários
+        for i in range(min(len(atacantes_meias), mover_atac_para_meias)):
+            mover_jogador(atacantes_meias[i], 'ATACANTES', 'MEIAS', "ATACANTE QUE JOGA MEIA")
+            excesso_atacantes -= 1
+            excesso_meias += 1
+    
+    # ETAPA 3: Balancear meias e zagueiros
+    if excesso_meias > 0 and excesso_zagueiros < 0:
+        print("\n--- ETAPA 3: MOVENDO MEIAS QUE JOGAM DE ZAGUEIRO ---")
+        
+        # Quantos meias precisamos mover para zagueiros
+        mover_meias_para_zag = min(excesso_meias, abs(excesso_zagueiros))
+        
+        # Encontrar meias que jogam de zagueiro
+        meias_zagueiros = []
+        for jogador in times['MEIAS']:
+            if jogador['posicao_secundaria'] == 'zagueiro':
+                meias_zagueiros.append(jogador)
+        
+        # Ordenar por habilidade (maiores primeiro)
+        meias_zagueiros.sort(key=lambda j: j['habilidade'], reverse=True)
+        
+        print(f"Encontrados {len(meias_zagueiros)} meias que jogam de zagueiro")
+        
+        # Mover os necessários
+        for i in range(min(len(meias_zagueiros), mover_meias_para_zag)):
+            mover_jogador(meias_zagueiros[i], 'MEIAS', 'ZAGUEIROS', "MEIA QUE JOGA ZAGUEIRO")
+            excesso_meias -= 1
+            excesso_zagueiros += 1
+    
+    # ETAPA 4: Balancear meias e atacantes
+    if excesso_meias > 0 and excesso_atacantes < 0:
+        print("\n--- ETAPA 4: MOVENDO MEIAS QUE JOGAM DE ATACANTE ---")
+        
+        # Quantos meias precisamos mover para atacantes
+        mover_meias_para_atac = min(excesso_meias, abs(excesso_atacantes))
+        
+        # Encontrar meias que jogam de atacante
+        meias_atacantes = []
+        for jogador in times['MEIAS']:
+            if jogador['posicao_secundaria'] == 'atacante':
+                meias_atacantes.append(jogador)
+        
+        # Ordenar por habilidade (maiores primeiro)
+        meias_atacantes.sort(key=lambda j: j['habilidade'], reverse=True)
+        
+        print(f"Encontrados {len(meias_atacantes)} meias que jogam de atacante")
+        
+        # Mover os necessários
+        for i in range(min(len(meias_atacantes), mover_meias_para_atac)):
+            mover_jogador(meias_atacantes[i], 'MEIAS', 'ATACANTES', "MEIA QUE JOGA ATACANTE")
+            excesso_meias -= 1
+            excesso_atacantes += 1
+    
+    # ETAPA 5: Balancear zagueiros e atacantes (se necessário)
+    if excesso_zagueiros > 0 and excesso_atacantes < 0:
+        print("\n--- ETAPA 5: MOVENDO ZAGUEIROS QUE JOGAM DE ATACANTE ---")
+        
+        # Quantos zagueiros precisamos mover para atacantes
+        mover_zag_para_atac = min(excesso_zagueiros, abs(excesso_atacantes))
+        
+        # Encontrar zagueiros que jogam de atacante
+        zagueiros_atacantes = []
+        for jogador in times['ZAGUEIROS']:
+            if jogador['posicao_secundaria'] == 'atacante':
+                zagueiros_atacantes.append(jogador)
+        
+        # Ordenar por habilidade (maiores primeiro)
+        zagueiros_atacantes.sort(key=lambda j: j['habilidade'], reverse=True)
+        
+        print(f"Encontrados {len(zagueiros_atacantes)} zagueiros que jogam de atacante")
+        
+        # Mover os necessários
+        for i in range(min(len(zagueiros_atacantes), mover_zag_para_atac)):
+            mover_jogador(zagueiros_atacantes[i], 'ZAGUEIROS', 'ATACANTES', "ZAGUEIRO QUE JOGA ATACANTE")
+            excesso_zagueiros -= 1
+            excesso_atacantes += 1
+    
+    # ETAPA 6: Balancear atacantes e zagueiros (se necessário)
+    if excesso_atacantes > 0 and excesso_zagueiros < 0:
+        print("\n--- ETAPA 6: MOVENDO ATACANTES QUE JOGAM DE ZAGUEIRO ---")
+        
+        # Quantos atacantes precisamos mover para zagueiros
+        mover_atac_para_zag = min(excesso_atacantes, abs(excesso_zagueiros))
+        
+        # Encontrar atacantes que jogam de zagueiro
+        atacantes_zagueiros = []
+        for jogador in times['ATACANTES']:
+            if jogador['posicao_secundaria'] == 'zagueiro':
+                atacantes_zagueiros.append(jogador)
+        
+        # Ordenar por habilidade (maiores primeiro)
+        atacantes_zagueiros.sort(key=lambda j: j['habilidade'], reverse=True)
+        
+        print(f"Encontrados {len(atacantes_zagueiros)} atacantes que jogam de zagueiro")
+        
+        # Mover os necessários
+        for i in range(min(len(atacantes_zagueiros), mover_atac_para_zag)):
+            mover_jogador(atacantes_zagueiros[i], 'ATACANTES', 'ZAGUEIROS', "ATACANTE QUE JOGA ZAGUEIRO")
+            excesso_atacantes -= 1
+            excesso_zagueiros += 1
+    
+    # ETAPA 7: Usar coringas (jogadores sem posição secundária) para finalizar o balanceamento
+    print("\n--- ETAPA 7: USANDO CORINGAS PARA FINALIZAR O BALANCEAMENTO ---")
+    
+    # Recalcular os excessos após as etapas anteriores
+    excesso_zagueiros = len(times['ZAGUEIROS']) - jogadores_alvo
+    excesso_meias = len(times['MEIAS']) - jogadores_alvo
+    excesso_atacantes = len(times['ATACANTES']) - jogadores_alvo
+    
+    print(f"Situação atual: ZAGUEIROS: {excesso_zagueiros}, MEIAS: {excesso_meias}, ATACANTES: {excesso_atacantes}")
+    
+    # Mover coringas zagueiros, se necessário
+    if excesso_zagueiros > 0:
+        # Encontrar zagueiros que são coringas
+        zagueiros_coringas = []
+        for jogador in times['ZAGUEIROS']:
+            if jogador['posicao_secundaria'] == 'nenhum':
+                zagueiros_coringas.append(jogador)
+        
+        # Ordenar por habilidade (menores primeiro para mover os mais fracos)
+        zagueiros_coringas.sort(key=lambda j: j['habilidade'])
+        
+        print(f"Encontrados {len(zagueiros_coringas)} zagueiros coringas")
+        
+        # Mover para meias, se necessário
+        if excesso_meias < 0:
+            mover_zag_para_meias = min(excesso_zagueiros, abs(excesso_meias), len(zagueiros_coringas))
+            for i in range(mover_zag_para_meias):
+                mover_jogador(zagueiros_coringas[i], 'ZAGUEIROS', 'MEIAS', "CORINGA")
+                excesso_zagueiros -= 1
+                excesso_meias += 1
+                zagueiros_coringas = [j for j in zagueiros_coringas if j not in times['MEIAS']]
+        
+        # Se ainda temos excesso e falta em atacantes
+        if excesso_zagueiros > 0 and excesso_atacantes < 0 and zagueiros_coringas:
+            mover_zag_para_atac = min(excesso_zagueiros, abs(excesso_atacantes), len(zagueiros_coringas))
+            for i in range(mover_zag_para_atac):
+                mover_jogador(zagueiros_coringas[i], 'ZAGUEIROS', 'ATACANTES', "CORINGA")
+                excesso_zagueiros -= 1
+                excesso_atacantes += 1
+    
+    # Mover coringas meias, se necessário
+    if excesso_meias > 0:
+        # Encontrar meias que são coringas
+        meias_coringas = []
+        for jogador in times['MEIAS']:
+            if jogador['posicao_secundaria'] == 'nenhum':
+                meias_coringas.append(jogador)
+        
+        # Ordenar por habilidade (menores primeiro para mover os mais fracos)
+        meias_coringas.sort(key=lambda j: j['habilidade'])
+        
+        print(f"Encontrados {len(meias_coringas)} meias coringas")
+        
+        # Mover para zagueiros, se necessário
+        if excesso_zagueiros < 0:
+            mover_meias_para_zag = min(excesso_meias, abs(excesso_zagueiros), len(meias_coringas))
+            for i in range(mover_meias_para_zag):
+                mover_jogador(meias_coringas[i], 'MEIAS', 'ZAGUEIROS', "CORINGA")
+                excesso_meias -= 1
+                excesso_zagueiros += 1
+                meias_coringas = [j for j in meias_coringas if j not in times['ZAGUEIROS']]
+        
+        # Se ainda temos excesso e falta em atacantes
+        if excesso_meias > 0 and excesso_atacantes < 0 and meias_coringas:
+            mover_meias_para_atac = min(excesso_meias, abs(excesso_atacantes), len(meias_coringas))
+            for i in range(mover_meias_para_atac):
+                mover_jogador(meias_coringas[i], 'MEIAS', 'ATACANTES', "CORINGA")
+                excesso_meias -= 1
+                excesso_atacantes += 1
+    
+    # Mover coringas atacantes, se necessário
+    if excesso_atacantes > 0:
+        # Encontrar atacantes que são coringas
+        atacantes_coringas = []
+        for jogador in times['ATACANTES']:
+            if jogador['posicao_secundaria'] == 'nenhum':
+                atacantes_coringas.append(jogador)
+        
+        # Ordenar por habilidade (menores primeiro para mover os mais fracos)
+        atacantes_coringas.sort(key=lambda j: j['habilidade'])
+        
+        print(f"Encontrados {len(atacantes_coringas)} atacantes coringas")
+        
+        # Mover para zagueiros, se necessário
+        if excesso_zagueiros < 0:
+            mover_atac_para_zag = min(excesso_atacantes, abs(excesso_zagueiros), len(atacantes_coringas))
+            for i in range(mover_atac_para_zag):
+                mover_jogador(atacantes_coringas[i], 'ATACANTES', 'ZAGUEIROS', "CORINGA")
+                excesso_atacantes -= 1
+                excesso_zagueiros += 1
+                atacantes_coringas = [j for j in atacantes_coringas if j not in times['ZAGUEIROS']]
+        
+        # Se ainda temos excesso e falta em meias
+        if excesso_atacantes > 0 and excesso_meias < 0 and atacantes_coringas:
+            mover_atac_para_meias = min(excesso_atacantes, abs(excesso_meias), len(atacantes_coringas))
+            for i in range(mover_atac_para_meias):
+                mover_jogador(atacantes_coringas[i], 'ATACANTES', 'MEIAS', "CORINGA")
+                excesso_atacantes -= 1
+                excesso_meias += 1
     
     # Análise final da quantidade de jogadores
     print("\nANÁLISE FINAL DA DISTRIBUIÇÃO:")
@@ -263,12 +426,26 @@ for pos in times:
     times[pos].sort(key=lambda j: j['habilidade'], reverse=True)
 
 # Imprimir lista inicial
+print("\n" + "="*80)
+print("DISTRIBUIÇÃO INICIAL DOS JOGADORES".center(80))
+print("="*80)
+print("\nQuantidade inicial de jogadores por posição:")
+for pos in POSICOES:
+    print(f"- {pos}: {len(times[pos])} jogadores")
+
 imprimir_lista_jogadores(times, "JOGADORES POR POSIÇÃO (INICIAL)")
 
 # Redistribuir jogadores
 times = redistribuir_jogadores(times)
 
 # Imprimir lista após redistribuição
+print("\n" + "="*80)
+print("RESULTADO FINAL APÓS REDISTRIBUIÇÃO".center(80))
+print("="*80)
+print("\nQuantidade final de jogadores por posição:")
+for pos in POSICOES:
+    print(f"- {pos}: {len(times[pos])} jogadores")
+
 imprimir_lista_jogadores(times, "JOGADORES POR POSIÇÃO (APÓS REDISTRIBUIÇÃO)")
 
 # Calcular somas
@@ -276,9 +453,10 @@ soma_total = sum(sum(j['habilidade'] for j in times[pos]) for pos in POSICOES)
 meta_notas = soma_total / 3
 somas = {pos: sum(j['habilidade'] for j in times[pos]) for pos in POSICOES}
 
-print(f"\nSOMA TOTAL DAS NOTAS: {soma_total:.1f} pontos")
-print(f"META POR POSIÇÃO: {meta_notas:.2f} pontos (Total {soma_total:.1f} / 3 posições)")
-print(f"META POR TIME (5 TIMES): {soma_total/5:.2f} pontos (Total {soma_total:.1f} / 5 times)")
+print("\n" + "="*100)
+print("SOMA TOTAL DAS NOTAS: {:.1f} pontos".format(soma_total))
+print("META POR POSIÇÃO: {:.2f} pontos (Total {:.1f} / 3 posições)".format(meta_notas, soma_total))
+print("META POR TIME (5 TIMES): {:.2f} pontos (Total {:.1f} / 5 times)".format(soma_total/5, soma_total))
 print("="*100)
 
 print("\nSOMA DAS NOTAS POR POSIÇÃO:")
@@ -286,9 +464,11 @@ print("-"*100)
 for pos in POSICOES:
     diferenca = somas[pos] - meta_notas
     sinal = "+" if diferenca > 0 else ""
-    print(f"{pos:<15} → {somas[pos]:>5.1f} pontos (Meta: {meta_notas:.2f}) [{sinal}{diferenca:.2f}]")
-    print(f"               → {somas[pos]/5:>5.1f} pontos por time (2 jogadores)")
+    print(f"{pos:<15} -> {somas[pos]:>5.1f} pontos (Meta: {meta_notas:.2f}) [{sinal}{diferenca:.2f}]")
+    print(f"               -> {somas[pos]/5:>5.1f} pontos por time (2 jogadores)")
 print("-"*100)
+
+print("\n")  # Adicione uma linha em branco para separar as seções
 
 
 # Inicializar estrutura dos times
@@ -329,17 +509,10 @@ salvar_historico(duplas_formadas)
 
 # Imprimir informação sobre o histórico
 historico = carregar_historico()
-print("\nINFORMAÇÕES SOBRE HISTÓRICO DE DUPLAS:")
-print(f"Total de duplas no histórico: {len(historico['duplas'])}")
+print("\nINFORMACOES SOBRE HISTORICO DE DUPLAS:")
+print(f"Total de duplas no historico: {len(historico['duplas'])}")
 print(f"Novas duplas formadas: {len(duplas_formadas)}")
 print("-"*100)
-
-# Embaralhar a ordem dos times
-ordem_times = list(range(1, NUM_TIMES + 1))
-random.shuffle(ordem_times)
-
-# Criar um dicionário para mapear a nova ordem
-mapeamento = {i+1: ordem_times[i] for i in range(NUM_TIMES)}
 
 # Imprimir times no novo formato
 def imprimir_times_novo_formato(times_montados):
@@ -353,15 +526,24 @@ def imprimir_times_novo_formato(times_montados):
         total_estrelas = time['total']
         
         # Imprimir cabeçalho do time
-        print(f"{'---------------':^15} Time {time_num} {'---------------':^15}")
+        print(f"--------------- Time {time_num} ---------------")
         print(f"Time {time_num} | {total_estrelas:.1f} Estrelas\n")
         
         # Imprimir jogadores
         for pos in POSICOES:
             for jogador in time[pos]:
                 pos_atual = pos[:3]  # Pega as 3 primeiras letras da posição atual
-                print(f"{jogador['nome']} | {jogador['habilidade']} Estrelas | {pos_atual}")
+                nome_limpo = remover_acentos(jogador['nome'])
+                print(f"{nome_limpo} | {jogador['habilidade']} Estrelas | {pos_atual}")
         
         print()
 
+# Embaralhar a ordem dos times
+ordem_times = list(range(1, NUM_TIMES + 1))
+random.shuffle(ordem_times)
+
+# Criar um dicionário para mapear a nova ordem
+mapeamento = {i+1: ordem_times[i] for i in range(NUM_TIMES)}
+
+# Chamar a função para imprimir os times
 imprimir_times_novo_formato(times_montados)

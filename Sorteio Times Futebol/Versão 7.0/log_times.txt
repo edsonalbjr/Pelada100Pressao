@@ -1,0 +1,54 @@
+RELATÓRIO DE DISTRIBUIÇÃO DE JOGADORES
+=====================================
+
+Time 1 | 22.0 Estrelas
+Zagueiros: 2, Meias: 2, Atacantes: 2
+Joao Vitor | 4 Estrelas | ZAG
+Elder | 3.5 Estrelas | ZAG
+Jackson | 4.5 Estrelas | MEI
+Flavio Ureia | 3.5 Estrelas | MEI
+Bruno Pessoa | 4.5 Estrelas | ATA
+Lucas S. | 2 Estrelas | ATA
+
+Time 2 | 21.0 Estrelas
+Zagueiros: 2, Meias: 2, Atacantes: 2
+Guilherme | 4 Estrelas | ZAG
+Vitor S. | 3.5 Estrelas | ZAG
+Felipe Pita | 4.5 Estrelas | MEI
+Marcos S. | 3.5 Estrelas | MEI
+Raphael B. | 3.5 Estrelas | ATA
+Hiago | 2 Estrelas | ATA
+
+Time 3 | 19.0 Estrelas
+Zagueiros: 2, Meias: 2, Atacantes: 2
+Flavio Ribeiro | 3.5 Estrelas | ZAG
+Tulio | 3.5 Estrelas | ZAG
+Diego Rocha | 4.5 Estrelas | MEI
+Dato | 3.5 Estrelas | MEI
+Lucas H. | 3 Estrelas | ATA
+Xandinho | 1 Estrelas | ATA
+
+Time 4 | 18.0 Estrelas
+Zagueiros: 2, Meias: 2, Atacantes: 1
+Leo A. | 3.5 Estrelas | ZAG
+Thiago Sultanum | 3.5 Estrelas | ZAG
+Kiel | 4 Estrelas | MEI
+Thayan | 4 Estrelas | MEI
+Victor Chaves | 3 Estrelas | ATA
+
+Time 5 | 17.0 Estrelas
+Zagueiros: 2, Meias: 2, Atacantes: 1
+Betinho | 3.5 Estrelas | ZAG
+Juninho | 3 Estrelas | ZAG
+Manga | 4.5 Estrelas | MEI
+Bruno Correia | 3 Estrelas | MEI
+Luiz | 3 Estrelas | ATA
+
+
+RESUMO FINAL
+===========
+Time 1: ZAGUEIROS: 2 jogadores, MEIAS: 2 jogadores, ATACANTES: 2 jogadores, Total: 22.0 estrelas
+Time 2: ZAGUEIROS: 2 jogadores, MEIAS: 2 jogadores, ATACANTES: 2 jogadores, Total: 21.0 estrelas
+Time 3: ZAGUEIROS: 2 jogadores, MEIAS: 2 jogadores, ATACANTES: 2 jogadores, Total: 19.0 estrelas
+Time 4: ZAGUEIROS: 2 jogadores, MEIAS: 2 jogadores, ATACANTES: 1 jogadores, Total: 18.0 estrelas
+Time 5: ZAGUEIROS: 2 jogadores, MEIAS: 2 jogadores, ATACANTES: 1 jogadores, Total: 17.0 estrelas
